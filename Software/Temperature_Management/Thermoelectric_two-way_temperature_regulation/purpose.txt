@@ -1,0 +1,3 @@
+even if i dont believe there is an actual need for cooling the tank, using thermoelectric plates will allow to do so. this might be an interesting feature allowing for a better control on the population growth rate. 
+
+for exemple, lowering the growth rate for a week while away from home will prevent the collapse of the colony.
