@@ -1,0 +1,3 @@
+The venturi bubbler is designed to pull gas by passing fluid through its main conduit. the power of the fluid pump can vary without varying the venturi effect if a proper mechanical or electronic pressure valve is added. 
+
+The flow of fluid leaving the venturi nozzle should be slow enough to not damage spirulina cells.
