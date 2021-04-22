@@ -1,0 +1,1 @@
+Boards should not be design as a single unit by default. allowing flexibility in the location of the electronic components is essential for developpement. For now, modularity is key.

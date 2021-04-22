@@ -1,0 +1,5 @@
+Hbridges might be more compact but less reliable and mor power limited. using relays might be a good cheap option for reversing the polarity of the Thermoelectric coolers(TEC) to allow heating and cooling of the fluid. 
+
+WARNNING
+Usual Arduino Relays tend to have a verification state when powered up which is very dangerous for H-Bridge replacement. Make sur to shut down the power to the Switching module before switching it. 
+for exemple, to switch from cooling to heating, first set an upstrem relay off to unpower every other switch, then make the switch to redirect the power. allow a delay for the mechanical switch to move and then allow the power to flow again. to avoid sparks and increasing the lifetime of all relay, the primary power control could be done using a Power transistor.

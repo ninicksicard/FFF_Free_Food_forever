@@ -1,0 +1,7 @@
+I advise to get the nodemcu with the CP2102 USB Controler. The ones with CH340 are larger and in my experience have higher failure rate. 
+
+WARNING
+The specific dimentions of different models are different. Make sure to verify de dimentions first
+
+
+Using an I2C IO Expander is an inexpensive way to increase siginficantly the capability of the NodeMCU The One suggested in this folder being only 1$, the total cost of the microcontroller with wifi capabilities is about 3. 
