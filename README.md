@@ -22,7 +22,7 @@ The required characteristics for this project's sucess :
 5. consider availlable free resources in your area. (in canada, we have good sun and temperatures half the year and we have free clean water. My design will take advantage of that)
 6. ideas sould be tested, not just spoken.
 
-The design is devides in sections: 
+The design is divides in sections: 
 1. lighting
 2. nutrient control
 3. colony wellbeing(what does spirulina really needs to live well)
