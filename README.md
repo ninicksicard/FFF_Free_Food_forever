@@ -1,6 +1,6 @@
 # FFF_Free_Food_forever
- Automated spirulina bioreactor. Might get as common as a fridge. might solve world unger.
-
+ Automated spirulina bioreactor. Might get as common as a fridge.
+ 
 This is my take on solving world unger. 
 
 Spirulina is nutritive and is cheap and easy to grow. Making a spirulina bioreactor could continuously produce a food source with minimal ressources. 
