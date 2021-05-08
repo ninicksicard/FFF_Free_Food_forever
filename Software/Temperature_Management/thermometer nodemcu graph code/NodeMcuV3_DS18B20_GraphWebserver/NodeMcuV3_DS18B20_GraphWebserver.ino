@@ -1,4 +1,3 @@
-
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <ESP8266WiFi.h>
@@ -23,48 +22,59 @@ int interfaceCallback(String input) {
     // do something
     return 1;
   }
-  return 0;
+  return 0;/
 }
 
 
 void sensorReading(float *measurements, int *measurementsCount, int maxMeasurements, int *measurementsTimestamp, float sensorInput) {
+  
   if (*measurementsCount < maxMeasurements) {
     *measurementsCount += 1;
     measurements[(*measurementsCount - 1)] = sensorInput;
-  } else {
-    *measurementsCount = maxMeasurements;
-    for(int i = 0; i < (*measurementsCount - 1); i++) {
-      measurements[i] = measurements[i + 1];
+    } else {
+      *measurementsCount = maxMeasurements;
+      for(int i = 0; i < (*measurementsCount - 1); i++) {
+        measurements[i] = measurements[i + 1];
+      }
+      measurements[(*measurementsCount - 1)] = sensorInput;
     }
-    measurements[(*measurementsCount - 1)] = sensorInput;
+    *measurementsTimestamp = millis();
   }
-  *measurementsTimestamp = millis();
-}
+
+
+
+
 
 
 // Graph 2
 int measurementsCount2 = 0;
 float measurements2[800] = {};
 int measurementsTimestamp2 = millis();
-int cycleDuration2 = 1; // duration in seconds
+int cycleDuration2 = 60; // duration in seconds
 
 void sensorReading2() {
   sensors.requestTemperatures();
   float sensorInput = sensors.getTempC(tempDeviceAddress);   // <- sensor reading for second input
   sensorReading(measurements2, &measurementsCount2, 1000, &measurementsTimestamp2, sensorInput);
-}
+  }
 
 void configWebInterface() {
   String name2 = "Temperature";
   String unit2 = "°C";
   int good2 = 30;
   int bad2 = 50;
-  int min2 = -10;
-  int max2 = 40;
+  int min2 = 20;
+  int max2 = 35;
   int stepsize2 = 5;
   int cycleStepsize2 = 600;
   webInterface.addPlot(name2, unit2, cycleDuration2, good2, bad2, min2, max2, stepsize2, cycleDuration2, cycleStepsize2, &measurementsCount2, measurements2, &measurementsTimestamp2);
 }
+
+
+
+
+
+
 
 
 void setup() {
