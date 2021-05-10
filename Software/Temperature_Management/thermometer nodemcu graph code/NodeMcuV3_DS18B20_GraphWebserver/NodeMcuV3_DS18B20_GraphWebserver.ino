@@ -22,7 +22,7 @@ int interfaceCallback(String input) {
     // do something
     return 1;
   }
-  return 0;/
+  return 0;
 }
 
 

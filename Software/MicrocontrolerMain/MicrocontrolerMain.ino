@@ -8,17 +8,22 @@
 #include <ESP8266WebServer.h>
 #include <sensorplot_webinterface.h>
 #include <Adafruit_ADS1X15.h>
+#include <Adafruit_PWMServoDriver.h>
 
-Adafruit_ADS1015 ads;
+Adafruit_ADS1115 ads;
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
+ESP8266WebServer server(80);
+SensorPlot_WebInterface webInterface = SensorPlot_WebInterface();
+
 
 // adding reading delay
-int preReadDelay = 20; //ms before reading analog input to ensure stabilised sensor voltage
+int preReadDelay = 10; //ms before reading analog input to ensure stabilised sensor voltage
 
 
 
 
 
-int x=4;
+int x = 14;
 
 
 
@@ -43,11 +48,17 @@ int x=4;
 
 /////////////////////// general purpos sensor read //////////////////////////////
 float sensorRead(int sensor[]) {
+  Serial.println("reading sensor");
   //sensor is a list of 2 ints, [power pin, read pin]
-  digitalWrite(sensor[0], HIGH);
+  //digitalWrite(sensor[0], HIGH);
   delay(preReadDelay);
-  int16_t sensor_value = ads.readADC_SingleEnded(sensor[1]);
-  digitalWrite(sensor[0], LOW);
+  Serial.println(sensor[1]);
+  int16_t sensor_value;
+  Serial.println("sensor_value");
+  sensor_value = ads.readADC_SingleEnded(sensor[1]);
+  Serial.println(sensor_value);
+  //digitalWrite(sensor[0], LOW);
+  Serial.print("now return");
   return sensor_value;
 }
 
@@ -55,8 +66,13 @@ float sensorRead(int sensor[]) {
 
 
 ////////////////////// general purpose relay switch control /////////////////////
-void switchRelay(int relay, int state) {
+void switchRelay(int relay, uint8_t state) {
   // code this according to the right relay board choosen(choose board once number of channel is known)
+  if (state==HIGH){
+    pwm.setPWM(relay, 4096, 0);  
+  }else if (state==LOW){
+  pwm.setPWM(relay, 0, 4096);
+  }
 }
 
 
@@ -110,7 +126,7 @@ float lightSens() {
 
 
 /////////////////// Light Switch /////////////////
-int Light_Switch = x; //x:relay number or pin
+int Light_Switch = 0; //x:relay number or pin
 
 void lightSwitch_on() {
   switchRelay(Light_Switch, HIGH);
@@ -271,7 +287,7 @@ float ph_sens() {
     temperature logs/alert
 */
 int numberOfDevices;
-#define ONE_WIRE_BUS 4 //x: the pin for thermometer read
+#define ONE_WIRE_BUS D5 //x: the pin for thermometer read
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
@@ -308,16 +324,18 @@ void fan_off() {
 
 // should allow for wifi control
 
-ESP8266WebServer server(80);
-SensorPlot_WebInterface webInterface = SensorPlot_WebInterface();
 
 int interfaceCallback(String input) {
   // use the input for example as a password and trigger some action
   // or use it as a command and execute accordingly
   // when the input was valid you should return a 1
   // in case of a invalid input return a 0
-  if (input == "password") {
-    // do something
+  if (input == "lightSwitch_on") {
+    lightSwitch_on();
+    return 1;
+  }
+  if (input == "lightSwitch_off") {
+    lightSwitch_off();
     return 1;
   }
   return 0;
@@ -345,7 +363,7 @@ void sensorReading(float *measurements, int *measurementsCount, int maxMeasureme
 int measurementsCount1 = 0;
 float measurements1[128] = {};
 int measurementsTimestamp1 = millis();
-int cycleDuration1 = 60; // duration in seconds
+int cycleDuration1 = 20; // duration in seconds
 void sensorReading1() {
   float sensorInput = temperature_sens();    // <- sensor reading for first input
   sensorReading(measurements1, &measurementsCount1, 128, &measurementsTimestamp1, sensorInput);
@@ -355,7 +373,7 @@ void sensorReading1() {
 int measurementsCount2 = 0;
 float measurements2[128] = {};
 int measurementsTimestamp2 = millis();
-int cycleDuration2 = 60; // duration in seconds
+int cycleDuration2 = 20; // duration in seconds
 void sensorReading2() {
   float sensorInput = lightSens();    // <- sensor reading for second input
   sensorReading(measurements2, &measurementsCount2, 128, &measurementsTimestamp2, sensorInput);
@@ -365,7 +383,7 @@ void sensorReading2() {
 int measurementsCount3 = 0;
 float measurements3[128] = {};
 int measurementsTimestamp3 = millis();
-int cycleDuration3 = 60; // duration in seconds
+int cycleDuration3 = 20; // duration in seconds
 void sensorReading3() {
   float sensorInput = secondaryTankLevel();    // <- sensor reading for second input
   sensorReading(measurements3, &measurementsCount3, 128, &measurementsTimestamp3, sensorInput);
@@ -375,20 +393,20 @@ void sensorReading3() {
 int measurementsCount4 = 0;
 float measurements4[128] = {};
 int measurementsTimestamp4 = millis();
-int cycleDuration4 = 60; // duration in seconds
+int cycleDuration4 = 20; // duration in seconds
 void sensorReading4() {
   float sensorInput = populationDensity();    // <- sensor reading for second input
   sensorReading(measurements4, &measurementsCount4, 128, &measurementsTimestamp4, sensorInput);
 }
-// Graph 5 Ph graph
-int measurementsCount5 = 0;
-float measurements5[128] = {};
-int measurementsTimestamp5 = millis();
-int cycleDuration5 = 60; // duration in seconds
-void sensorReading5() {
-  float sensorInput = ph_sens();    // <- sensor reading for second input
-  sensorReading(measurements5, &measurementsCount5, 128, &measurementsTimestamp5, sensorInput);
-}
+//// Graph 5 Ph graph
+//int measurementsCount5 = 0;
+//float measurements5[128] = {};
+//int measurementsTimestamp5 = millis();
+//int cycleDuration5 = 20; // duration in seconds
+//void sensorReading5() {
+//  float sensorInput = ph_sens();    // <- sensor reading for second input
+//  sensorReading(measurements5, &measurementsCount5, 128, &measurementsTimestamp5, sensorInput);
+//}
 
 void configWebInterface() {
   // Graph 1 temperature
@@ -401,15 +419,15 @@ void configWebInterface() {
   int stepsize1 = 200;
   int cycleStepsize1 = 600;
   webInterface.addPlot(name1, unit1, cycleDuration1, good1, bad1, min1, max1, stepsize1, cycleDuration1, cycleStepsize1, &measurementsCount1, measurements1, &measurementsTimestamp1);
-  
+
   // Graph 2 Light Level
   String name2 = "Light Level";
   String unit2 = "units";
-  int good2 = 22;
-  int bad2 = 50;
-  int min2 = -10;
-  int max2 = 40;
-  int stepsize2 = 5;
+  int good2 = 24450;
+  int bad2 = 24500;
+  int min2 = 24450;
+  int max2 = 24500;
+  int stepsize2 = 200;
   int cycleStepsize2 = 600;
   webInterface.addPlot(name2, unit2, cycleDuration2, good2, bad2, min2, max2, stepsize2, cycleDuration2, cycleStepsize2, &measurementsCount2, measurements2, &measurementsTimestamp2);
 
@@ -419,8 +437,8 @@ void configWebInterface() {
   String unit3 = "units";
   int good3 = 30;
   int bad3 = 50;
-  int min3 = -10;
-  int max3 = 40;
+  int min3 = 0;
+  int max3 = 10;
   int stepsize3 = 5;
   int cycleStepsize3 = 600;
   webInterface.addPlot(name3, unit3, cycleDuration3, good3, bad3, min3, max3, stepsize3, cycleDuration3, cycleStepsize3, &measurementsCount3, measurements3, &measurementsTimestamp3);
@@ -428,24 +446,24 @@ void configWebInterface() {
   // Graph 4 population density
   String name4 = "Population Density";
   String unit4 = "units";
-  int good4 = 30;
-  int bad4 = 50;
-  int min4 = -10;
-  int max4 = 40;
-  int stepsize4 = 5;
+  int good4 = 24450;
+  int bad4 = 24500;
+  int min4 = 24450;
+  int max4 = 24500;
+  int stepsize4 = 200;
   int cycleStepsize4 = 600;
   webInterface.addPlot(name4, unit4, cycleDuration4, good4, bad4, min4, max4, stepsize4, cycleDuration4, cycleStepsize4, &measurementsCount4, measurements4, &measurementsTimestamp4);
 
-  // Graph 5 ph graph
-  String name5 = "pH";
-  String unit5 = "pH";
-  int good5 = 10;
-  int bad5 = 22;
-  int min5 = -10;
-  int max5 = 40;
-  int stepsize5 = 5;
-  int cycleStepsize5 = 600;
-  webInterface.addPlot(name5, unit5, cycleDuration5, good5, bad5, min5, max5, stepsize5, cycleDuration5, cycleStepsize5, &measurementsCount5, measurements5, &measurementsTimestamp5);
+//  // Graph 5 ph graph
+//  String name5 = "pH";
+//  String unit5 = "pH";
+//  int good5 = 8;
+//  int bad5 = 9;
+//  int min5 = 7;
+//  int max5 = 12;
+//  int stepsize5 = 1;
+//  int cycleStepsize5 = 600;
+//  webInterface.addPlot(name5, unit5, cycleDuration5, good5, bad5, min5, max5, stepsize5, cycleDuration5, cycleStepsize5, &measurementsCount5, measurements5, &measurementsTimestamp5);
 }
 
 
@@ -472,34 +490,38 @@ void configWebInterface() {
 void setup() {
   // put your setup code here, to run once:
 
-  
+
   Serial.begin(115200);
+  Wire.begin(D1, D2);
+  Serial.print(Wire.available());
+
   ads.begin();
+  pwm.begin();
+//  pwm.setPWMFreq(1600);
+  
+//  pinMode(x, OUTPUT);
+//  pinMode(D0, INPUT);
 
-  pinMode(x,OUTPUT);
-  pinMode(D1,OUTPUT);
+  
 
 
-
-
-//-----------------------------------------thermometer setup ----------------------------------------------
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //-----------------------------------------thermometer setup ----------------------------------------------
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   sensors.begin();
   numberOfDevices = sensors.getDeviceCount();
-
   // locate devices on the bus
   Serial.print("Locating devices...");
   Serial.print("Found ");
   Serial.print(numberOfDevices, DEC);
   Serial.println(" devices.");
-  
+
   for (int i = 0; i < numberOfDevices; i++) {
     Serial.print("address : ");
     Serial.print(sensors.getAddress(tempDeviceAddress, i));
-    
+
     // Search the wire for address
     if (sensors.getAddress(tempDeviceAddress, i)) {
-      
+
       // Output the device ID
       Serial.print(sensors.getAddress(tempDeviceAddress, i));
       Serial.println(i, DEC);
@@ -514,18 +536,25 @@ void setup() {
 
 
 
-//------------------------------------wifi graph setup ------------------------------------------------ -
-//////////////////////////////////////////webinterface 
+  //------------------------------------wifi graph setup ------------------------------------------------ -
+  //////////////////////////////////////////webinterface
   configWebInterface();
+  Serial.println("webinterfaceconfigured");
   webInterface.interfaceConfig("Sensor Measurements", "Inputfield", "Perform Action");
   webInterface.serverResponseSetup(&server, &interfaceCallback);
   server.begin();
+  Serial.println("server began");
 
+  Serial.println("reading sensor1");
   sensorReading1();
+  Serial.println("reading sensor2");
   sensorReading2();
+  Serial.println("reading sensor3");
   sensorReading3();
+  Serial.println("reading sensor4");
   sensorReading4();
-  sensorReading5();
+//  Serial.println("reading sensor5");
+//  sensorReading5();
 
   WiFi.begin("Sylvie", "Bertrande");
   while (WiFi.status() != WL_CONNECTED) {
@@ -555,21 +584,30 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   // --------------------------------------------------------graph loop --------------------------------------------
+  
   if ((millis() - measurementsTimestamp1) > (cycleDuration1 * 1000)) {
+    Serial.println("reading sensor1");
     sensorReading1();
   }
   if ((millis() - measurementsTimestamp2) > (cycleDuration2 * 1000)) {
+    Serial.println("reading sensor2");
     sensorReading2();
   }
   if ((millis() - measurementsTimestamp3) > (cycleDuration3 * 1000)) {
+    Serial.println("reading sensor3");
     sensorReading3();
   }
   if ((millis() - measurementsTimestamp4) > (cycleDuration4 * 1000)) {
+    Serial.println("reading sensor4");
     sensorReading4();
   }
-  if ((millis() - measurementsTimestamp5) > (cycleDuration5 * 1000)) {
-    sensorReading5();
-  }
+//  if ((millis() - measurementsTimestamp5) > (cycleDuration5 * 1000)) {
+//    Serial.println("reading sensor5");
+//    sensorReading5();
+//  }
+  delay(400);
+  Serial.println("handleclient");
   server.handleClient();
+  delay(400);
 }
 // -------------------------------------------------------------------------------------------- -
