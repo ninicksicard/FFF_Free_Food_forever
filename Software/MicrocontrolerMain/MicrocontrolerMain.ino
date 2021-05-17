@@ -23,7 +23,7 @@ int preReadDelay = 10; //ms before reading analog input to ensure stabilised sen
 
 
 
-int x = 14;
+int x = 12;
 
 
 
@@ -69,9 +69,9 @@ float sensorRead(int sensor[]) {
 void switchRelay(int relay, uint8_t state) {
   // code this according to the right relay board choosen(choose board once number of channel is known)
   if (state==HIGH){
-    pwm.setPWM(relay, 4096, 0);  
+    pwm.setPWM(relay, 0, 4096);  
   }else if (state==LOW){
-  pwm.setPWM(relay, 0, 4096);
+    pwm.setPWM(relay, 4096, 0);
   }
 }
 
@@ -270,13 +270,26 @@ void nutrientPump_off() {
 */
 
 int phSensor[2] = {x, 3}; //x: main power relay pin or number y: ph analog input
-int phCalFact = 32;
-int phCalOffset1 = 0.82;
+int phCalFact = 34;
+float phCalOffset1 = 2.55/5-0.1;
 int phCalOffset2 = 7;
 
 float ph_sens() {
   float ph;
-  ph = (phCalOffset1 - sensorRead(phSensor)) * phCalFact + phCalOffset2;
+  float phread = sensorRead(phSensor);
+  
+  ph = (phCalOffset1 - phread/32768)* phCalFact+ phCalOffset2;
+  Serial.println();
+  Serial.print("phread : ");
+  Serial.println(phread);
+  Serial.print("phread/32768 : ");
+  Serial.println(phread/32768);
+  Serial.print("phCalOffset1 : ");
+  Serial.println(phCalOffset1);
+  Serial.print("phCalOffset1 - phread/32768 : ");
+  Serial.println(phCalOffset1 - phread/32768);
+  Serial.print("ph : ");
+  Serial.println(ph);
   return ph;
 }
 
@@ -287,23 +300,39 @@ float ph_sens() {
     temperature logs/alert
 */
 int numberOfDevices;
-#define ONE_WIRE_BUS D5 //x: the pin for thermometer read
+#define ONE_WIRE_BUS 14 //x: the pin for thermometer read
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
+
+float minTempTreshold = 32;
+float maxTempTreshold = 35;
 
 ///////////////// thermometers input ////////////
 int tempCalFact = 1;
 int tempCalOffset = 0 ;
 // int thermometer[2] = {x, y}; // x:thermometer power pin, y:thermometer analog input pin
 
-float temperature_sens() {
+float temperature_sens() {  // todo : add a power up and reset of ds18b20
   float temp;
+  sensors.requestTemperatures();
+ // oneWire.reset();
   temp = sensors.getTempC(tempDeviceAddress) * tempCalFact + tempCalOffset;
   return temp;
 }
 
 //////////////// thermal plate control ////////////
+
+int heatingRelay = 12; // x: relay number for heating plate
+
+void heating_on(){
+  switchRelay(heatingRelay, HIGH);
+}
+
+void heating_off(){
+  switchRelay(heatingRelay, LOW);
+}
+
 
 //////////////// fan control /////////////////////
 int fan_switch = x; //x: fan power pin
@@ -338,6 +367,14 @@ int interfaceCallback(String input) {
     lightSwitch_off();
     return 1;
   }
+  if (input == "heating_on") {
+    heating_on();
+    return 1;
+  }
+  if (input == "heating_off") {
+    heating_off();
+    return 1;
+  }
   return 0;
 }
 
@@ -363,9 +400,14 @@ void sensorReading(float *measurements, int *measurementsCount, int maxMeasureme
 int measurementsCount1 = 0;
 float measurements1[128] = {};
 int measurementsTimestamp1 = millis();
-int cycleDuration1 = 20; // duration in seconds
+int cycleDuration1 = 5; // duration in seconds
 void sensorReading1() {
   float sensorInput = temperature_sens();    // <- sensor reading for first input
+  if (sensorInput> maxTempTreshold){
+    heating_off();
+  }else if (sensorInput<minTempTreshold){
+    heating_on();
+  }
   sensorReading(measurements1, &measurementsCount1, 128, &measurementsTimestamp1, sensorInput);
 }
 
@@ -375,7 +417,7 @@ float measurements2[128] = {};
 int measurementsTimestamp2 = millis();
 int cycleDuration2 = 20; // duration in seconds
 void sensorReading2() {
-  float sensorInput = lightSens();    // <- sensor reading for second input
+  float sensorInput = lightSens()/100000;    // <- sensor reading for second input
   sensorReading(measurements2, &measurementsCount2, 128, &measurementsTimestamp2, sensorInput);
 }
 
@@ -395,18 +437,18 @@ float measurements4[128] = {};
 int measurementsTimestamp4 = millis();
 int cycleDuration4 = 20; // duration in seconds
 void sensorReading4() {
-  float sensorInput = populationDensity();    // <- sensor reading for second input
+  float sensorInput = populationDensity()/10000;    // <- sensor reading for second input
   sensorReading(measurements4, &measurementsCount4, 128, &measurementsTimestamp4, sensorInput);
 }
-//// Graph 5 Ph graph
-//int measurementsCount5 = 0;
-//float measurements5[128] = {};
-//int measurementsTimestamp5 = millis();
-//int cycleDuration5 = 20; // duration in seconds
-//void sensorReading5() {
-//  float sensorInput = ph_sens();    // <- sensor reading for second input
-//  sensorReading(measurements5, &measurementsCount5, 128, &measurementsTimestamp5, sensorInput);
-//}
+// Graph 5 Ph graph
+int measurementsCount5 = 0;
+float measurements5[128] = {};
+int measurementsTimestamp5 = millis();
+int cycleDuration5 = 6; // duration in seconds
+void sensorReading5() {
+  float sensorInput = ph_sens();    // <- sensor reading for second input
+  sensorReading(measurements5, &measurementsCount5, 128, &measurementsTimestamp5, sensorInput);
+}
 
 void configWebInterface() {
   // Graph 1 temperature
@@ -416,18 +458,18 @@ void configWebInterface() {
   int bad1 = 32;
   int min1 = 20;
   int max1 = 35;
-  int stepsize1 = 200;
-  int cycleStepsize1 = 600;
+  int stepsize1 = 2;
+  int cycleStepsize1 = 12;
   webInterface.addPlot(name1, unit1, cycleDuration1, good1, bad1, min1, max1, stepsize1, cycleDuration1, cycleStepsize1, &measurementsCount1, measurements1, &measurementsTimestamp1);
 
   // Graph 2 Light Level
   String name2 = "Light Level";
   String unit2 = "units";
-  int good2 = 24450;
-  int bad2 = 24500;
-  int min2 = 24450;
-  int max2 = 24500;
-  int stepsize2 = 200;
+  int good2 = 2;
+  int bad2 = 3;
+  int min2 = 2;
+  int max2 = 4;
+  int stepsize2 = 2;
   int cycleStepsize2 = 600;
   webInterface.addPlot(name2, unit2, cycleDuration2, good2, bad2, min2, max2, stepsize2, cycleDuration2, cycleStepsize2, &measurementsCount2, measurements2, &measurementsTimestamp2);
 
@@ -446,24 +488,24 @@ void configWebInterface() {
   // Graph 4 population density
   String name4 = "Population Density";
   String unit4 = "units";
-  int good4 = 24450;
-  int bad4 = 24500;
-  int min4 = 24450;
-  int max4 = 24500;
-  int stepsize4 = 200;
+  int good4 = 2;
+  int bad4 = 3;
+  int min4 = 2;
+  int max4 = 4;
+  int stepsize4 = 2;
   int cycleStepsize4 = 600;
   webInterface.addPlot(name4, unit4, cycleDuration4, good4, bad4, min4, max4, stepsize4, cycleDuration4, cycleStepsize4, &measurementsCount4, measurements4, &measurementsTimestamp4);
 
-//  // Graph 5 ph graph
-//  String name5 = "pH";
-//  String unit5 = "pH";
-//  int good5 = 8;
-//  int bad5 = 9;
-//  int min5 = 7;
-//  int max5 = 12;
-//  int stepsize5 = 1;
-//  int cycleStepsize5 = 600;
-//  webInterface.addPlot(name5, unit5, cycleDuration5, good5, bad5, min5, max5, stepsize5, cycleDuration5, cycleStepsize5, &measurementsCount5, measurements5, &measurementsTimestamp5);
+  // Graph 5 ph graph
+  String name5 = "pH";
+  String unit5 = "pH";
+  int good5 = 8;
+  int bad5 = 9;
+  int min5 = 7;
+  int max5 = 12;
+  int stepsize5 = 1;
+  int cycleStepsize5 = 12;
+  webInterface.addPlot(name5, unit5, cycleDuration5, good5, bad5, min5, max5, stepsize5, cycleDuration5, cycleStepsize5, &measurementsCount5, measurements5, &measurementsTimestamp5);
 }
 
 
@@ -492,12 +534,12 @@ void setup() {
 
 
   Serial.begin(115200);
-  Wire.begin(D1, D2);
+  Wire.begin(D1, D2);     //sda,scl
   Serial.print(Wire.available());
 
   ads.begin();
   pwm.begin();
-//  pwm.setPWMFreq(1600);
+  pwm.setPWMFreq(1600);
   
 //  pinMode(x, OUTPUT);
 //  pinMode(D0, INPUT);
@@ -510,6 +552,7 @@ void setup() {
   sensors.begin();
   numberOfDevices = sensors.getDeviceCount();
   // locate devices on the bus
+  Serial.println();
   Serial.print("Locating devices...");
   Serial.print("Found ");
   Serial.print(numberOfDevices, DEC);
@@ -517,7 +560,7 @@ void setup() {
 
   for (int i = 0; i < numberOfDevices; i++) {
     Serial.print("address : ");
-    Serial.print(sensors.getAddress(tempDeviceAddress, i));
+    Serial.println(sensors.getAddress(tempDeviceAddress, i));
 
     // Search the wire for address
     if (sensors.getAddress(tempDeviceAddress, i)) {
@@ -529,7 +572,7 @@ void setup() {
 
       float tempC = sensors.getTempC(tempDeviceAddress);
       Serial.print("Temp C: ");
-      Serial.print(tempC);
+      Serial.println(tempC);
 
     }
   }
@@ -601,10 +644,10 @@ void loop() {
     Serial.println("reading sensor4");
     sensorReading4();
   }
-//  if ((millis() - measurementsTimestamp5) > (cycleDuration5 * 1000)) {
-//    Serial.println("reading sensor5");
-//    sensorReading5();
-//  }
+  if ((millis() - measurementsTimestamp5) > (cycleDuration5 * 1000)) {
+    Serial.println("reading sensor5");
+    sensorReading5();
+  }
   delay(400);
   Serial.println("handleclient");
   server.handleClient();

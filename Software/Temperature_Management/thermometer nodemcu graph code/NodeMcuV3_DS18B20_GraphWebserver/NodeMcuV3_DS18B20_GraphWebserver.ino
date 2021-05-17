@@ -5,7 +5,7 @@
 #include <sensorplot_webinterface.h>
 
 int numberOfDevices;
-#define ONE_WIRE_BUS 4
+#define ONE_WIRE_BUS 14
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress; 
@@ -50,7 +50,7 @@ void sensorReading(float *measurements, int *measurementsCount, int maxMeasureme
 int measurementsCount2 = 0;
 float measurements2[800] = {};
 int measurementsTimestamp2 = millis();
-int cycleDuration2 = 60; // duration in seconds
+int cycleDuration2 = 5; // duration in seconds
 
 void sensorReading2() {
   sensors.requestTemperatures();
@@ -66,7 +66,7 @@ void configWebInterface() {
   int min2 = 20;
   int max2 = 35;
   int stepsize2 = 5;
-  int cycleStepsize2 = 600;
+  int cycleStepsize2 = 60;
   webInterface.addPlot(name2, unit2, cycleDuration2, good2, bad2, min2, max2, stepsize2, cycleDuration2, cycleStepsize2, &measurementsCount2, measurements2, &measurementsTimestamp2);
 }
 
