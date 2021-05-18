@@ -305,8 +305,8 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
 
-float minTempTreshold = 32;
-float maxTempTreshold = 35;
+float minTempTreshold = 30;
+float maxTempTreshold = 31;
 
 ///////////////// thermometers input ////////////
 int tempCalFact = 1;
@@ -400,7 +400,7 @@ void sensorReading(float *measurements, int *measurementsCount, int maxMeasureme
 int measurementsCount1 = 0;
 float measurements1[128] = {};
 int measurementsTimestamp1 = millis();
-int cycleDuration1 = 5; // duration in seconds
+int cycleDuration1 = 2; // duration in seconds
 void sensorReading1() {
   float sensorInput = temperature_sens();    // <- sensor reading for first input
   if (sensorInput> maxTempTreshold){
@@ -596,11 +596,11 @@ void setup() {
   sensorReading3();
   Serial.println("reading sensor4");
   sensorReading4();
-//  Serial.println("reading sensor5");
-//  sensorReading5();
+  Serial.println("reading sensor5");
+  sensorReading5();
 
   WiFi.begin("Sylvie", "Bertrande");
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED and millis() < 3000 ) {
     delay(500);
     Serial.print(".");
   }
