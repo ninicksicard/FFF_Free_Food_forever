@@ -9,6 +9,20 @@
 #include <sensorplot_webinterface.h>
 #include <Adafruit_ADS1X15.h>
 #include <Adafruit_PWMServoDriver.h>
+#include <NTPClient.h>
+#include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
+
+
+
+const long utcOffsetInSeconds = -4*3600;
+
+char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
+
 
 Adafruit_ADS1115 ads;
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
@@ -305,8 +319,11 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
 
-float minTempTreshold = 30;
-float maxTempTreshold = 31;
+float minTempNightTreshold = 26;
+float maxTempNightTreshold = 27;
+
+float minTempDayTreshold = 36;
+float maxTempDayTreshold = 37;
 
 ///////////////// thermometers input ////////////
 int tempCalFact = 1;
@@ -402,6 +419,16 @@ float measurements1[128] = {};
 int measurementsTimestamp1 = millis();
 int cycleDuration1 = 2; // duration in seconds
 void sensorReading1() {
+  float maxTempTreshold;
+  float minTempTreshold;
+  if (6 < timeClient.getHours() < 20) {
+    minTempTreshold = minTempDayTreshold;
+    maxTempTreshold = maxTempDayTreshold;
+  } else {
+    minTempTreshold = minTempDayTreshold;
+    maxTempTreshold = maxTempDayTreshold;
+  }
+  
   float sensorInput = temperature_sens();    // <- sensor reading for first input
   if (sensorInput> maxTempTreshold){
     heating_off();
@@ -540,6 +567,7 @@ void setup() {
   ads.begin();
   pwm.begin();
   pwm.setPWMFreq(1600);
+  timeClient.begin();
   
 //  pinMode(x, OUTPUT);
 //  pinMode(D0, INPUT);
@@ -609,6 +637,10 @@ void setup() {
   Serial.print("http://");
   Serial.print(WiFi.localIP());
   Serial.println("/");
+  timeClient.update();
+  Serial.println();
+  Serial.print("TIME is  : "); 
+  Serial.println(timeClient.getHours());
 }
 
 // ------------------------------------------------------------------------------------------------------------
@@ -625,6 +657,7 @@ void setup() {
 
 
 void loop() {
+  timeClient.update();
   // put your main code here, to run repeatedly:
   // --------------------------------------------------------graph loop --------------------------------------------
   
