@@ -33,7 +33,7 @@ SensorPlot_WebInterface webInterface = SensorPlot_WebInterface();
 // adding reading delay
 int preReadDelay = 10; //ms before reading analog input to ensure stabilised sensor voltage
 
-
+int globalTimestamp = millis();
 
 
 
@@ -174,7 +174,7 @@ void lightSwitch_off() {
 
 
 /////////////////////////////////////
-int Aeration_Pump = x; //x:relay number for aeration pump
+int Aeration_Pump = 8; //x:relay number for aeration pump
 
 void Aeration_on() {
   switchRelay(Aeration_Pump, HIGH);
@@ -198,7 +198,7 @@ void Aeration_off() {
 /////////////Main tank water level sensor/////////////
 int mainLevelCalFact = 1;
 int mainLevelCalOffset = 0;
-int main_Level_Sensor[2] = {x, 1}; // x: sensor power pin, y:sensor analog in pin
+int main_Level_Sensor[2] = {9, 1}; // x: sensor power pin, y:sensor analog in pin
 
 float mainTankLevel() {
   float Water_Level;
@@ -211,14 +211,44 @@ float mainTankLevel() {
 /////////////secondary tank water level sensor/////////
 int secondaryLevelCalFact = 1;
 int secondaryLevelCalOffset = 0;
-int secondary_Level_Sensor[2] = {x, 4}; // x: sensor power pin, y:sensor analog in pin
+int secondary_Level_Sensor[2] = {9, 4}; // x: sensor power pin, y:sensor analog in pin
 
 float secondaryTankLevel() {
   float Water_Level;
+  
   Water_Level = sensorRead(secondary_Level_Sensor) * secondaryLevelCalFact + secondaryLevelCalOffset;
+  Serial.print("water level sensor value : ");
+  Serial.println(Water_Level);
   return Water_Level;
 }
 
+
+int waterPump = 16;
+bool waterpumpOn = false;
+float waterLevelTreshold = 100;
+
+void waterPump_on(){
+  switchRelay(waterPump,HIGH);
+}
+
+void waterPump_off(){
+  switchRelay(waterPump,LOW);
+}
+
+int waterLevelControl(){
+  if (mainTankLevel()<waterLevelTreshold && !waterpumpOn){
+    waterPump_on();
+    waterpumpOn=true;
+    return 1;
+  }else if (mainTankLevel()>= waterLevelTreshold && waterpumpOn){
+    waterPump_off(); //todo: verify if active before turning it off again
+    waterpumpOn=false;
+    return 0;
+  }
+  
+}
+  
+  
 
 
 // ---------------------------------------- population management ---------------------------------
@@ -240,8 +270,8 @@ float populationDensity() {
     extraction pump/valve
 */
 
-int extractionPump = x; //x:extraction pump relay switch
-int vacuumPump = x; // x:vaccume pump relay number
+int extractionPump = 3; //x:extraction pump relay switch
+int vacuumPump = 1; // x:vaccume pump relay number
 
 void extraction_on() { // extraction time is in seconds
   switchRelay(extractionPump, HIGH);
@@ -267,8 +297,8 @@ void vacuumPump_off() {
 */
 //right now, considering a premixed fluid that is added as the algea is extracted
 
-int peristalticPump = x; //x: peristaltic pump power pins
-int stirerMotor = x; //x: stiring motor power pin relay
+int peristalticPump = 12; //x: peristaltic pump power pins
+int stirerMotor = 14; //x: stiring motor power pin relay
 
 void nutrienPump_on() {
   switchRelay(peristalticPump, HIGH);
@@ -277,6 +307,13 @@ void nutrienPump_on() {
 void nutrientPump_off() {
   switchRelay(peristalticPump, LOW);
 }
+
+// ---------------------------------------waterlevel --------------------------------
+
+
+
+
+
 
 // -------------------------------------------- Ph management --------------------------------------
 /*  ph sensor
@@ -304,6 +341,9 @@ float ph_sens() {
   Serial.println(phCalOffset1 - phread/32768);
   Serial.print("ph : ");
   Serial.println(ph);
+  if (ph<4){
+    return NULL;
+  }
   return ph;
 }
 
@@ -322,8 +362,8 @@ DeviceAddress tempDeviceAddress;
 float minTempNightTreshold = 26;
 float maxTempNightTreshold = 27;
 
-float minTempDayTreshold = 36;
-float maxTempDayTreshold = 37;
+float minTempDayTreshold = 31;
+float maxTempDayTreshold = 32;
 
 ///////////////// thermometers input ////////////
 int tempCalFact = 1;
@@ -340,7 +380,7 @@ float temperature_sens() {  // todo : add a power up and reset of ds18b20
 
 //////////////// thermal plate control ////////////
 
-int heatingRelay = 12; // x: relay number for heating plate
+int heatingRelay = 2; // x: relay number for heating plate
 
 void heating_on(){
   switchRelay(heatingRelay, HIGH);
@@ -352,7 +392,7 @@ void heating_off(){
 
 
 //////////////// fan control /////////////////////
-int fan_switch = x; //x: fan power pin
+int fan_switch = 10; //x: fan power pin
 
 void fan_on() {
   switchRelay(fan_switch, HIGH);
@@ -376,6 +416,7 @@ int interfaceCallback(String input) {
   // or use it as a command and execute accordingly
   // when the input was valid you should return a 1
   // in case of a invalid input return a 0
+  
   if (input == "lightSwitch_on") {
     lightSwitch_on();
     return 1;
@@ -384,6 +425,7 @@ int interfaceCallback(String input) {
     lightSwitch_off();
     return 1;
   }
+  
   if (input == "heating_on") {
     heating_on();
     return 1;
@@ -392,11 +434,22 @@ int interfaceCallback(String input) {
     heating_off();
     return 1;
   }
+  
+  if (input == "Aeration_on") {
+    Aeration_on();
+    return 1;
+  }
+  if (input == "Aeration_off") {
+    Aeration_off();
+    return 1;
+  }
+
   return 0;
 }
 
-void sensorReading(float *measurements, int *measurementsCount, int maxMeasurements, int *measurementsTimestamp, float sensorInput) {
 
+
+void sensorReading(float *measurements, int *measurementsCount, int maxMeasurements, int *measurementsTimestamp, float sensorInput) {
   if (*measurementsCount < maxMeasurements) {
     *measurementsCount += 1;
     measurements[(*measurementsCount - 1)] = sensorInput;
@@ -411,16 +464,20 @@ void sensorReading(float *measurements, int *measurementsCount, int maxMeasureme
 }
 
 
+// *******************************************************************************
+
+
 // You can input up to 32 Plots which will be displayed as graphs on the WebInterface
 
 // Graph 1 temperature
 int measurementsCount1 = 0;
 float measurements1[128] = {};
 int measurementsTimestamp1 = millis();
-int cycleDuration1 = 2; // duration in seconds
+int cycleDuration1 = 120; // duration in seconds
 void sensorReading1() {
   float maxTempTreshold;
   float minTempTreshold;
+  timeClient.update();
   if (6 < timeClient.getHours() < 20) {
     minTempTreshold = minTempDayTreshold;
     maxTempTreshold = maxTempDayTreshold;
@@ -433,16 +490,20 @@ void sensorReading1() {
   if (sensorInput> maxTempTreshold){
     heating_off();
   }else if (sensorInput<minTempTreshold){
+    if (sensorInput == -127){
+      return;
+    }
     heating_on();
   }
+  
   sensorReading(measurements1, &measurementsCount1, 128, &measurementsTimestamp1, sensorInput);
 }
-
+ 
 // Graph 2 Light Level
 int measurementsCount2 = 0;
 float measurements2[128] = {};
 int measurementsTimestamp2 = millis();
-int cycleDuration2 = 20; // duration in seconds
+int cycleDuration2 = 120; // duration in seconds
 void sensorReading2() {
   float sensorInput = lightSens()/100000;    // <- sensor reading for second input
   sensorReading(measurements2, &measurementsCount2, 128, &measurementsTimestamp2, sensorInput);
@@ -452,9 +513,9 @@ void sensorReading2() {
 int measurementsCount3 = 0;
 float measurements3[128] = {};
 int measurementsTimestamp3 = millis();
-int cycleDuration3 = 20; // duration in seconds
+int cycleDuration3 = 300; // duration in seconds
 void sensorReading3() {
-  float sensorInput = secondaryTankLevel();    // <- sensor reading for second input
+  float sensorInput = mainTankLevel();    // <- sensor reading for second input
   sensorReading(measurements3, &measurementsCount3, 128, &measurementsTimestamp3, sensorInput);
 }
 
@@ -462,7 +523,7 @@ void sensorReading3() {
 int measurementsCount4 = 0;
 float measurements4[128] = {};
 int measurementsTimestamp4 = millis();
-int cycleDuration4 = 20; // duration in seconds
+int cycleDuration4 = 200; // duration in seconds
 void sensorReading4() {
   float sensorInput = populationDensity()/10000;    // <- sensor reading for second input
   sensorReading(measurements4, &measurementsCount4, 128, &measurementsTimestamp4, sensorInput);
@@ -471,22 +532,28 @@ void sensorReading4() {
 int measurementsCount5 = 0;
 float measurements5[128] = {};
 int measurementsTimestamp5 = millis();
-int cycleDuration5 = 6; // duration in seconds
+int cycleDuration5 = 20; // duration in seconds
 void sensorReading5() {
   float sensorInput = ph_sens();    // <- sensor reading for second input
   sensorReading(measurements5, &measurementsCount5, 128, &measurementsTimestamp5, sensorInput);
 }
+
+
+
+//**********************************************************************
+
+
 
 void configWebInterface() {
   // Graph 1 temperature
   String name1 = "Temperature";
   String unit1 = "°C";
   int good1 = 31;
-  int bad1 = 32;
-  int min1 = 20;
+  int bad1 = 35;
+  int min1 = 30;
   int max1 = 35;
-  int stepsize1 = 2;
-  int cycleStepsize1 = 12;
+  int stepsize1 = 1;
+  int cycleStepsize1 = 1200;
   webInterface.addPlot(name1, unit1, cycleDuration1, good1, bad1, min1, max1, stepsize1, cycleDuration1, cycleStepsize1, &measurementsCount1, measurements1, &measurementsTimestamp1);
 
   // Graph 2 Light Level
@@ -496,7 +563,7 @@ void configWebInterface() {
   int bad2 = 3;
   int min2 = 2;
   int max2 = 4;
-  int stepsize2 = 2;
+  int stepsize2 = 20000;
   int cycleStepsize2 = 600;
   webInterface.addPlot(name2, unit2, cycleDuration2, good2, bad2, min2, max2, stepsize2, cycleDuration2, cycleStepsize2, &measurementsCount2, measurements2, &measurementsTimestamp2);
 
@@ -508,7 +575,7 @@ void configWebInterface() {
   int bad3 = 50;
   int min3 = 0;
   int max3 = 10;
-  int stepsize3 = 5;
+  int stepsize3 = 500;
   int cycleStepsize3 = 600;
   webInterface.addPlot(name3, unit3, cycleDuration3, good3, bad3, min3, max3, stepsize3, cycleDuration3, cycleStepsize3, &measurementsCount3, measurements3, &measurementsTimestamp3);
 
@@ -519,7 +586,7 @@ void configWebInterface() {
   int bad4 = 3;
   int min4 = 2;
   int max4 = 4;
-  int stepsize4 = 2;
+  int stepsize4 = 20000;
   int cycleStepsize4 = 600;
   webInterface.addPlot(name4, unit4, cycleDuration4, good4, bad4, min4, max4, stepsize4, cycleDuration4, cycleStepsize4, &measurementsCount4, measurements4, &measurementsTimestamp4);
 
@@ -530,10 +597,11 @@ void configWebInterface() {
   int bad5 = 9;
   int min5 = 7;
   int max5 = 12;
-  int stepsize5 = 1;
+  int stepsize5 = 0.5;
   int cycleStepsize5 = 12;
   webInterface.addPlot(name5, unit5, cycleDuration5, good5, bad5, min5, max5, stepsize5, cycleDuration5, cycleStepsize5, &measurementsCount5, measurements5, &measurementsTimestamp5);
 }
+
 
 
 
@@ -568,10 +636,6 @@ void setup() {
   pwm.begin();
   pwm.setPWMFreq(1600);
   timeClient.begin();
-  
-//  pinMode(x, OUTPUT);
-//  pinMode(D0, INPUT);
-
   
 
 
@@ -657,9 +721,9 @@ void setup() {
 
 
 void loop() {
-  timeClient.update();
   // put your main code here, to run repeatedly:
   // --------------------------------------------------------graph loop --------------------------------------------
+  
   
   if ((millis() - measurementsTimestamp1) > (cycleDuration1 * 1000)) {
     Serial.println("reading sensor1");
@@ -681,9 +745,10 @@ void loop() {
     Serial.println("reading sensor5");
     sensorReading5();
   }
-  delay(400);
-  Serial.println("handleclient");
-  server.handleClient();
-  delay(400);
+
+  for (int i = 0; i <= 20; i++){ 
+    Serial.println("handleclient");
+    server.handleClient();  
+  }
 }
 // -------------------------------------------------------------------------------------------- -
