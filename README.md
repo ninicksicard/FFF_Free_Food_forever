@@ -5,8 +5,14 @@ This is my take on solving world unger.
 
 Spirulina is nutritive and is cheap and easy to grow. Making a spirulina bioreactor could continuously produce a food source with minimal ressources. 
 
+Current status : 
+working prototype with some manual input. 
+Total cost is less than 300$ and can be lowered.
+
+
+
 This project feasibility as been evaluated in some steps. 
-1. nutritonal values of some easily grown microorganisms
+1. nutritonal values of some easily grown microorganisms 
 2. requirements to grow such organism.
 3. growth rate and volume needed to achieve sustainable food source quantity. 
 4. manual extraction methods and potential of automation
