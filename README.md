@@ -1,5 +1,5 @@
 # FFF_Free_Food_forever
- Automated spirulina bioreactor. Might get as common as a fridge.
+ Automated spirulina bioreactor. When your refrigerator also make your food.
  
 This is my take on solving world unger. 
 
