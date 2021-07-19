@@ -1,0 +1,162 @@
+* {
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+@media(prefers-color-scheme: light) {
+	* {
+		--backgroundPrimaryColor: #f0f0fa;
+		--backgroundSecondaryColor: #e0e0ea;
+		--foregroundPrimaryColor: #10101a;
+		--foregroundSecondaryColor: #30303a;
+	}
+}
+@media(prefers-color-scheme: dark) {
+	* {
+		--backgroundPrimaryColor: #0a0a1a;
+		--backgroundSecondaryColor: #181828;
+		--foregroundPrimaryColor: #d0d0da;
+		--foregroundSecondaryColor: #a0a0aa;
+	}
+}
+@media (min-width: 750px) {
+	* {
+		--outterViewWidth: calc(100vw - 120px);
+		--outterMargin: 40px;
+		--outterPadding: 20px;
+		--smileySize: 250px;
+		--smileyFloat: left;
+		--smileyMarginLeft: 0;
+		--graphHeight: 500px;
+	}
+}
+@media (max-width: 750px) {
+	* {
+		--outterViewWidth: calc(100vw - 60px);
+		--outterMargin: 20px;
+		--outterPadding: 10px;
+		--smileySize: 350px;
+		--smileyFloat: none;
+		--smileyMarginLeft: calc((var(--outterViewWidth)/2) - (var(--smileySize)/2));
+		--graphHeight: 600px;
+	}
+}
+body {
+	background-color: var(--backgroundPrimaryColor);
+	color: var(--foregroundPrimaryColor);
+	padding: 0;
+	margin: 0;
+	margin-bottom: var(--outterMargin);
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+}
+h1 {
+	color: var(--foregroundSecondaryColor);
+	font-weight: 800;
+	font-size: 32px;
+}
+h2 {
+	color: var(--foregroundSecondaryColor);
+	font-weight: 600;
+	font-size: 24px;
+}
+a {
+	color: var(--foregroundSecondaryColor);
+}
+p {
+	font-size: 20px;
+}
+input {
+	background-color: var(--backgroundSecondaryColor);
+	color: var(--foregroundSecondaryColor);
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+}
+.container {
+	width: var(--outterViewWidth);
+	margin: var(--outterMargin);
+	margin-bottom: calc(var(--outterMargin)/2);
+	padding: var(--outterPadding);
+	background-color: var(--backgroundSecondaryColor);
+	border-radius: 25px;
+	clear: both;
+	overflow: hidden;
+}
+.measurementsContainer {
+	margin: var(--outterMargin);
+	color: var(--foregroundPrimaryColor);
+	font-weight: 500;
+	font-size: 16px;
+}
+.measurementsContainer .valueLabel {
+	color: var(--foregroundSecondaryColor);
+	font-weight: 600;
+}
+.smiley {
+	height: var(--smileySize);
+	width: var(--smileySize);
+	margin: var(--outterMargin);
+	margin-left: var(--smileyMarginLeft);
+	float: var(--smileyFloat);
+}
+.face {
+	--smileyColor: #ffe600;
+	fill: var(--smileyColor);
+	r: calc(var(--smileySize)/2);
+}
+.eye {
+	fill: #000000;
+	r: calc(var(--smileySize)/15);
+}
+.mouth {
+	fill: none;
+	stroke: #000000;
+	stroke-width: calc(var(--smileySize)/20);
+	stroke-linecap: round;
+	--animationTime: 0.5s;
+	transition: all var(--animationTime) ease-in-out;
+	-webkit-transition: all var(--animationTime) ease-in-out;
+}
+.graphContainer {
+	width: calc(100% - (var(--outterMargin)*2));
+	height: var(--graphHeight);
+	margin: var(--outterMargin);
+}
+.frame {
+	fill: none;
+	stroke: var(--foregroundSecondaryColor);
+	stroke-width: 5px;
+	stroke-linecap: round;
+}
+.graph {
+	fill: none;
+	stroke: var(--foregroundPrimaryColor);
+	stroke-width: 5px;
+	stroke-linecap: round;
+}
+circle {
+	fill: var(--foregroundPrimaryColor);
+	r: 5px;
+}
+.label {
+	fill: var(--foregroundPrimaryColor);
+	font-size: 14px;
+}
+.labelY {
+	fill: var(--foregroundPrimaryColor);
+	font-size: 14px;
+}
+.labelX {
+	fill: var(--foregroundPrimaryColor);
+	font-size: 14px;
+}
+.detailPointer {
+	stroke: var(--foregroundPrimaryColor);
+	stroke-width: 3px;
+	stroke-linecap: round;
+}
+.detailLabel {
+	fill: var(--backgroundSecondaryColor);
+	stroke: var(--foregroundPrimaryColor);
+	stroke-width: 3px;
+	stroke-linecap: round;
+}
