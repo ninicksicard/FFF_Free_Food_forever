@@ -1,6 +1,0 @@
-keeping a positive pressure system can prevent contamination and allow for leaks monitoring. 
-in the event of a leak, there might be a process where all the liquid is dumped to avoid important water damage.
-
-It is also critical to not inflate the system too much when adding water or gas. 
-
-some hardware pressure management will also need to be implemented

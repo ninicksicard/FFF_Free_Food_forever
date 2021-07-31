@@ -1,3 +1,0 @@
-Boards should not be design as a single unit by default. allowing flexibility in the location of the electronic components is essential for developpement. For now, modularity is key.
-
-The design proposed allows the connection of all individually bought modules on a single pcb. the relay board is still missing and will need to be added subsequently.
