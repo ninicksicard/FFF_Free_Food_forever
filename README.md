@@ -15,6 +15,10 @@ working cost is pretty low :
   cost of growth medium is uncertain now. seems to be less than 30$/months.
   in canada, water is free, but elsewhere it should be taken into account.
 
+
+---> See the Fabrication Guide pdf for a better look <----
+
+
 To make your own : 
 1. gather all the parts listed in the parts list.
 2. order a pcb on jlcpcb with the Gerber Files for the motherboard
