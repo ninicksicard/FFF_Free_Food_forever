@@ -28,12 +28,32 @@ int GetHour(){
   printTime();
   return t.getHour(h12Flag, pmFlag);
 }
+int GetMinute(){
+  if (WiFi.status() == WL_CONNECTED ){
+    SyncOnlineTime();
+  }
+  printTime();
+  return t.getMinute();
+}
 
 void TimeProfileManagement(){
   int nowhour = GetHour();
+  int nowminute = GetMinute();
   if (morningtime < nowhour&&nowhour<noontime){
     Serial.println("day time");
     GraphUpdates.PhRead = 50; // duration in seconds
+    if (SystemStates.NightTime) {
+      FeatureEnable.Aeration = true;
+      FeatureEnable.DensityRead = false;
+      FeatureEnable.WaterLevel = false;
+      FeatureEnable.PhRead = true;
+      SystemStates.NightTime = false;
+    }
+    if (nowminute<10){
+      FeatureEnable.Aeration = false;
+    }else if (nowminute>20){
+      FeatureEnable.Aeration = false;
+    }
     Aeration_on();
     //Lights on
     if (!SystemStates.Lights){
@@ -53,11 +73,20 @@ void TimeProfileManagement(){
   else{
     Serial.println("night time");
     GraphUpdates.PhRead = 3600; // duration in seconds
-    //Aeration_off();
+    if (!SystemStates.NightTime) {
+      Aeration_off();
+      FeatureEnable.Aeration = false;
+      FeatureEnable.DensityRead = false;
+      FeatureEnable.WaterLevel = false;
+      FeatureEnable.PhRead = false;
+      SystemStates.NightTime = true;
+    }
+    
     //Lights off
     if (SystemStates.Lights){
       lightSwitch_off();
     }
+    
     //NightTime temperatures
     if (SystemStates.Heat){
       Temps.MinTreshold = Temps.NightMin;

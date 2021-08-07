@@ -25,7 +25,7 @@ bool pmFlag;
 
 // -------PWM -----------
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
-int preReadDelay = 10; //ms before reading analog input to ensure stabilised sensor voltage
+int preReadDelay = 400; //ms before reading analog input to ensure stabilised sensor voltage
 
 
 //--------sensors---------

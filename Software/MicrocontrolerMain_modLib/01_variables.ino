@@ -13,20 +13,20 @@ typedef struct {
 CycleDurations GraphUpdates = {
   400,    //   GraphUpdates.TempRead
   200,    //   GraphUpdates.LightRead
-  20,    //   GraphUpdates.WaterLevel
-  200 ,   //   GraphUpdates.PopulationRead
-  400,    //   GraphUpdates.PhRead   
-  300,   //   GraphUpdates.TimeCheck
+  20,     //   GraphUpdates.WaterLevel
+  80,   //   GraphUpdates.PopulationRead
+  600,    //   GraphUpdates.PhRead   
+  300,    //   GraphUpdates.TimeCheck
   10      //   
 };
 
 CycleDurations ControlCycles = {
   120,    //   ControlCycles.TempRead;
-  200,    //   ControlCycles.LightRead;
-  60,    //   ControlCycles.WaterLevel;
-  200,   //   ControlCycles.PopulationRead;
+  90,     //   ControlCycles.LightRead;
+  60,     //   ControlCycles.WaterLevel;
+  20,    //   ControlCycles.PopulationRead;
   400,    //   ControlCycles.PhRead;
-  300,   //   ControlCycles.TimeCheck;
+  300,    //   ControlCycles.TimeCheck;
   10      //   ControlCycles.Global
 };
 
@@ -40,22 +40,39 @@ CycleDurations Timestamps = {
   millis()    //Timestamps.Global
 };
 
+//todo add the ready to harvest parameter
 typedef struct{
   float DayMax;
   float DayMin;
   float NightMax;
   float NightMin;
-  float MinTreshold;
   float MaxTreshold;
-} Temperatures;
+  float MinTreshold;
+} Limits;
 
-Temperatures Temps = {
+Limits Temps = {
   31, //  Temps.DayMax
   30, //  Temps.DayMin
   27, //  Temps.NightMax
   26, //  Temps.NightMin
-  30, //  Temps.MinTreshold
-  31  //  Temps.MaxTreshold
+  31, //  Temps.MaxTreshold
+  30  //  Temps.MinTreshold
+};
+
+typedef struct{
+  double WaterMaxTreshold;
+  double WaterLevel;
+  double DensityHighTreshold;
+  double DensityLowTreshold;
+  double Density;
+}Things;
+
+Things Variables = {
+  25600,  //  Variables.WaterLevelTreshold
+  0,  //  Variables.WaterLevel
+  1,  //  Variables.DensityHighTreshold
+  0,  //  Variables.DensityLowTreshold
+  0   //  Variables.Density
 };
 
 typedef struct{
@@ -68,18 +85,40 @@ typedef struct{
   int NutrientPump;
   int Fan;
   int DensitySensor;
+  int NightTime;
 }PinOut;
+
+
+/* PWM pin | Relay number
+ * 0 | 1
+ * 1 | 3
+ * 2 | 5
+ * 3 | 7
+ * 4 | 9
+ * 5 | 11
+ * 6 | 13
+ * 7 | 15
+ * 8 | 2
+ * 9 | 4
+ * 10| 6
+ * 11| 8
+ * 12| 10
+ * 13| 12
+ * 14| 14
+ * 15| 16
+ */
 
 PinOut Relays = {
   0,  // Lights;        120v  AC
-  2,  // Heat;          120v  AC
-  8,  // WaterPump;     12v   DC
-  14, // WaterWheel;    5v    DC
-  13, // AirPump;       12v   DC
-  12, // ExtractionPump 12v   DC
-  1,  // NutrientPump   12v   DC
-  5,  // Fan            12v   DC
-  10  // density sensor 5v    DC
+  1,  // Heat;          120v  AC
+  12, // WaterPump;     12v   DC
+  22, //--- WaterWheel;    5v    DC  // using 22 for null value
+  4,  // AirPump;       12v   DC
+  11, // ExtractionPump 12v   DC
+  13, // NutrientPump   12v   DC
+  22, // ---Fan            12v   DC
+  22,  // ---density sensor 5v    DC
+  22
 };
 
 PinOut SystemStates = {
@@ -91,7 +130,8 @@ PinOut SystemStates = {
   false, //  ExtractionPump   
   false, //  NutrientPump     
   false, //  Fan            
-  false  // density sensor 
+  false,  // density sensor 
+  false
 };
 
 typedef struct{
@@ -100,14 +140,75 @@ typedef struct{
   int WaterLevelSensor;
   int DensitySensor;
   int LightSensor;
-}PinIn;
+}Pins;
 
-PinIn Sensors = {
+Pins Sensors = {
       // using a nodemcu pin Thermometer;
    3,   // 3 = A3   PhSensor;
-   0,   // 0 = A0   WaterLevelSensor;
-   1,   // 1 = A1   DensitySensor;
+   1,   // 1 = A1   WaterLevelSensor;
+   0,   // 0 = A0   DensitySensor;
    2    // 2 = A2   LightSensor;
+};
+
+Pins SensorsOut = {
+  // none
+  22, //always on
+  D7, // handeled by other function
+  D7, // handeled by other function 
+  22 // always on
+};
+
+typedef struct{
+  bool Aeration;
+  bool PhRead;
+  bool WaterWheel;
+  bool WaterLevel;
+  bool DensityRead;
+  bool Heating;
+  bool Lighting;
+}Feature;
+
+Feature FeatureEnable = {
+  true,
+  true,
+  false,
+  false,
+  true,
+  true,
+  true
+};
+
+Feature FeatureAvailable = {
+  true,
+  true,
+  false,
+  false,
+  true,
+  true,
+  true
+};
+
+
+typedef struct{
+  double phOffset;
+  double phFactor;
+  double DensityOffset;
+  double DensityFactor;
+  double WaterLevelOffset;
+  double WaterLevelFactor;
+  double LightLevelOffset;
+  double LightLevelFactor;
+}calvars;
+
+calvars Calibration = {
+  24.6461703497,  //  phoffet 
+  -0.0012872774,  //  phfactor
+  0,              //  DensityOffset
+  1,              //  DensityFact
+  0,              //  WaterLevelOffset
+  1,              //  WaterLevelFactor
+  0,              //  LightLevelOffset
+  1               //  LightLevelFactor
 };
 
 float waterLevel;
