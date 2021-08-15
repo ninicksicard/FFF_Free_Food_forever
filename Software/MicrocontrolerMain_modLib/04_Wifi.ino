@@ -1,3 +1,5 @@
+// todo rename sensorreads properly
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------------------------- webserver graphs --------------------------------------------------------
 
@@ -26,21 +28,29 @@ int interfaceCallback(String input) {
   // in case of a invalid input return a 0
   
   if (input == "lightSwitch_on") {
+    if (FeatureAvailable.Lighting){
+      FeatureEnable.Lighting = true;  
+    }
     lightSwitch_on();
     return 1;
   }
   if (input == "lightSwitch_off") {
+    FeatureEnable.Lighting = false; 
     lightSwitch_off();
     return 1;
   }
   
   if (input == "heating_on") {
+    if (FeatureAvailable.Heating){
+      FeatureEnable.Heating = true;  
+    }
     Temps.MinTreshold = Temps.DayMin;
     Temps.MaxTreshold = Temps.DayMax;
     heating_on();
     return 1;
   }
   if (input == "heating_off") {
+    FeatureEnable.Heating = false; 
     Temps.MinTreshold = 0;
     Temps.MaxTreshold = 1;
     heating_off();
@@ -48,14 +58,33 @@ int interfaceCallback(String input) {
   }
   
   if (input == "Aeration_on") {
+    if (FeatureAvailable.Aeration){
+      FeatureEnable.Aeration = true;  
+    }
     Aeration_on();
     return 1;
   }
   if (input == "Aeration_off") {
+    FeatureEnable.Aeration = false;  
     Aeration_off();
     return 1;
   }
-
+  if (input == "DensityRead_on") {
+    FeatureEnable.DensityRead = true;  
+    return 1;
+  }
+  if (input == "DensityRead_off") {
+    FeatureEnable.DensityRead = false;  
+    return 1;
+  }
+  if (input == "WaterLevel_on") {
+    FeatureEnable.WaterLevel = true;  
+    return 1;
+  }
+  if (input == "Water_Level_off") {
+    FeatureEnable.WaterLevel = false;  
+    return 1;
+  }
   return 0;
 }
 
@@ -120,7 +149,7 @@ void sensorReading2() {
 
 void sensorReading3() {
   float sensorInput = mainTankLevel();    // <- sensor reading for second input
-  waterLevel = sensorInput;
+  Variables.WaterLevel = sensorInput;
   sensorReading(measurements3, &measurementsCount3, 128, &Timestamps.WaterLevel, sensorInput);
 }
 
@@ -131,12 +160,8 @@ void sensorReading4() {
 }
 
 void sensorReading5() {
-  Aeration_off();
-  delay(10000);//todo : replace delay with timestamps
   float sensorInput = ph_sens();    // <- sensor reading for second input 
   sensorReading(measurements5, &measurementsCount5, 128, &Timestamps.PhRead, sensorInput);
-  delay(200);
-  Aeration_on();
 }
 
 

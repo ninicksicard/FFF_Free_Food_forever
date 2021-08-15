@@ -1,6 +1,17 @@
 ////////////////////// general purpose relay switch control /////////////////////
 void switchRelay(int relay, uint8_t state) {
-  // code this according to the right relay board choosen(choose board once number of channel is known)
+  /* take in the pwm pin to activate as "relay" 
+   *  and switch its value to fit the "state" recieved
+   */
+   
+  if (relay == 22){
+    Serialprintln("relay was set to 22 and will not be actuated");
+    return;
+  }
+  Serialprint("relay number ");
+  Serialprint(String(relay));
+  Serialprint(" turned ");
+  Serialprintln(String(state));
   if (state == HIGH) {
     pwm.setPWM(relay, 0, 4096);
   } else if (state == LOW) {
@@ -8,9 +19,9 @@ void switchRelay(int relay, uint8_t state) {
   }
 }
 
-
-
 void setup_relays() {
+  /* go thrue all pins of te pwm to reset their state 
+   * syncing them with the system's state variables */
   for (int relay = 0; relay <= 16; relay++) {
     switchRelay(relay, HIGH);
     switchRelay(relay, LOW);
@@ -18,51 +29,66 @@ void setup_relays() {
 }
 
 /////////////////// Light Switch /////////////////
-int Light_Switch = 0; //x:relay number or pin
 
 void lightSwitch_on() {
-  switchRelay(Light_Switch, HIGH);
-  Serial.println("light switched on");
-  SystemStates.Lights = true;
+  /*  Turn Lights on, send a status update via serialprint
+   *  and change the light state in system memory */
+  if (FeatureEnable.Lighting){
+     switchRelay(Relays.Lights, HIGH);
+     Serial.println("light switched on");
+     SystemStates.Lights = true;
+  }
 }
 
 void lightSwitch_off() {
-  switchRelay(Light_Switch, LOW);
+  /*  Turn Lights off, send a status update via serialprint
+   *  and change the light state in system memory
+   */
+  switchRelay(Relays.Lights, LOW);
   Serial.println("light switched off");
   SystemStates.Lights = false;
 }
 
-void LightCycleManager() { //todo : move to time cycle management
-  int nowhour = GetHour();
-  if (morningtime < nowhour && nowhour < noontime && !SystemStates.Lights) {
-    lightSwitch_on();
-
-  }
-  else if (!(morningtime < nowhour && nowhour < noontime) && SystemStates.Lights) {
-    lightSwitch_off();
-
-  }
-}
+//void LightCycleManager() { //todo : move to time cycle management
+//  /* this code first retrieve the curent hour as a single number
+//   *  it then compare the current hour with the time interval that define 
+//   *  the night time. 
+//   *  If the light is off and should be on, it switch it on
+//   *  If the light is on and should be off, it switch it off
+//   */
+//  int nowhour = GetHour();
+//  if (morningtime < nowhour && nowhour < noontime && !SystemStates.Lights) {
+//    lightSwitch_on();
+//  }
+//  else if (!(morningtime < nowhour && nowhour < noontime) && SystemStates.Lights) {
+//    lightSwitch_off();
+//  }
+//}
 
 
 
 // -------------------------------------- Aeration ----------------------------------------------
 
 void Aeration_on()  {
-
-  switchRelay(Relays.AirPump, HIGH);
-  Serial.println("AirPump On");
-  SystemStates.AirPump = true;
+  /*  this code switch the air pump on, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory
+   */
+  if (FeatureEnable.Aeration){
+    switchRelay(Relays.AirPump, HIGH);
+    Serial.println("AirPump On");
+    SystemStates.AirPump = true;
+  }
 }
-
 void Aeration_off() {
+  /*  this code switch the air pump off, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory
+   */
   switchRelay(Relays.AirPump, LOW);
   Serial.println("AirPump off");
   SystemStates.AirPump = false;
 }
-
-
-
 
 // ------------------------------------ Fluids management --------------------------------------
 /*  Main tank water level sensor
@@ -71,58 +97,85 @@ void Aeration_off() {
     recycled water pump (from extraction process)
 */
 
+// todo : add a valve control to fill up the clean water bucket 
+// it will also need another sensor(monitoring entire water level , a timer since the filling to allow chlorine to dissipate
 
 
 /////////////water level control////////
 
-// relay number for the water pump
-
-
-
-
-
 // Direct water pump actions
 void waterPump_on() {
-  switchRelay(Relays.WaterPump, HIGH);
-  Serial.println("water Pump turned on");
-  SystemStates.WaterPump = true;
+  /*  this code switch the water pump on, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory
+   */
+  if (FeatureEnable.WaterLevel) {
+    switchRelay(Relays.WaterPump, HIGH);
+    Serial.println("water Pump turned on");
+    SystemStates.WaterPump = true;
+  }
+  
 }
 
 void waterPump_off() {
+  /*  this code switch the water pump off, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory
+   */
   switchRelay(Relays.WaterPump, LOW);
   Serial.println("water Pump turned off");
   SystemStates.WaterPump = false;
 }
 
 
-
 // water pump control cycle
-// todo : duplicate this code for the sensor and pmp of the second water tank
 
-float waterLevelTreshold = 0.05;
 
 int waterLevelControl() {
-  if (waterLevel < waterLevelTreshold && !SystemStates.WaterPump) {
-    waterPump_on();
+  /*  this code compare the reviously measured water level senssor value 
+   *  it turns the water pump on or off 
+   *  todo : check wats up with the return 1
+   */
+    Serial.print("comparison : ");
+    Serial.println(Variables.WaterLevel > Variables.WaterMaxTreshold );
+    Serial.print("waterlevel : ");
+    Serial.println(Variables.WaterLevel);
+    Serial.print("treshold value : ");
+    Serial.println(Variables.WaterMaxTreshold);
+  if (Variables.WaterLevel > Variables.WaterMaxTreshold ) {
+    
+    if (!SystemStates.WaterPump){
+       waterPump_on();
+    }
     return 1;
 
-  } else if (waterLevel >= waterLevelTreshold && SystemStates.WaterPump) {
-    waterPump_off();
+  } else if (Variables.WaterLevel < Variables.WaterMaxTreshold) {
+    if (SystemStates.WaterPump){
+      waterPump_off();
+    }
     return 0;
   }
 }
 
 
-
-
 // --------------------------------------------- Extraction ----------------------------------------
 
 void extraction_on() { // extraction time is in seconds
+  /*  this code switch the extraction pump on, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory */
   switchRelay(Relays.ExtractionPump, HIGH);
+  Serial.println("Extraction pump turned on");
+  SystemStates.ExtractionPump = true;
 }
 
 void extraction_off() {
+  /*  this code switch the Extraction pump off, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory */
   switchRelay(Relays.ExtractionPump, LOW);
+  Serial.println("Extraction pump turned off");
+  SystemStates.ExtractionPump = false;
 }
 
 // ------------------------------------------Nutrient management ------------------------------------
@@ -133,22 +186,24 @@ void extraction_off() {
 */
 
 void nutrienPump_on() {
+  /*  this code switch the nutrient pump on, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory */
   switchRelay(Relays.NutrientPump, HIGH);
+  Serial.println("nutrient pump turned on");
+  SystemStates.NutrientPump = true;
 }
 
 void nutrientPump_off() {
+  /*  this code switch the Extraction pump off, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory */
   switchRelay(Relays.NutrientPump, LOW);
+  Serial.println("nutrient pump turned off");
+  SystemStates.NutrientPump = false;
 }
 
 // ---------------------------------------waterlevel --------------------------------
-
-
-
-
-
-
-
-
 
 // ----------------------------------------  Temperature management --------------------------------
 /*  thermometers input
@@ -159,39 +214,28 @@ void nutrientPump_off() {
 
 //////////////// thermal plate control ////////////
 
-int heatingRelay = 2; // x: relay number for heating plate
-
 void heating_on() {
-  if (!SystemStates.Heat) {
-    switchRelay(Relays.Heat, HIGH);
-    Serial.println("Heat turned on");
-    SystemStates.Heat = true;
+  /*  this code switch the heating element on, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory
+   */
+  if (FeatureEnable.Heating){
+    if (!SystemStates.Heat) {
+      switchRelay(Relays.Heat, HIGH);
+      Serial.println("Heat turned on");
+      SystemStates.Heat = true;
+    }
   }
 }
 
 void heating_off() {
+  /*  this code switch the heating element off, 
+   *  it also print a text update and change the pump's 
+   *  state in the system memory
+   */
   if (SystemStates.Heat) {
     switchRelay(Relays.Heat, LOW);
     Serial.println("Heat turned off");
     SystemStates.Heat = false;
-  }
-}
-
-
-//////////////// fan control /////////////////////
-
-void fan_on() {
-  if (SystemStates.Fan = false) {
-    switchRelay(Relays.Fan, HIGH);
-    Serial.println("fan turned on");
-    SystemStates.Fan = true;
-  }
-}
-
-void fan_off() {
-  if (SystemStates.Fan = true) {
-    switchRelay(Relays.Fan, LOW);
-    Serial.println("Fan turned off");
-    SystemStates.Fan = false;
   }
 }

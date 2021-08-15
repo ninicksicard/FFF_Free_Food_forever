@@ -1,5 +1,7 @@
 # FFF_Free_Food_forever
- Automated spirulina bioreactor. When your refrigerator also make your food.
+![image](https://user-images.githubusercontent.com/31396919/128581819-b96ffa0a-3eaa-40a2-945e-6a4c114157e8.png)
+
+Automated spirulina bioreactor. When your refrigerator also make your food.
  
 This is my take on solving world unger. 
 
@@ -12,6 +14,10 @@ working cost is pretty low :
   less than 7$/month of electricity
   cost of growth medium is uncertain now. seems to be less than 30$/months.
   in canada, water is free, but elsewhere it should be taken into account.
+
+
+---> See the Fabrication Guide pdf for a better look <----
+
 
 To make your own : 
 1. gather all the parts listed in the parts list.

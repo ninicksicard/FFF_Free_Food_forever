@@ -1,21 +1,34 @@
 /////////////////////// general purpos sensor read //////////////////////////////
+
 float sensorRead(int sensor[]) {
-//  Serial.println("reading sensor");
+  Serialprintln("reading sensor");
   //sensor is a list of 2 ints, [power pin, read pin]
-  switchRelay(sensor[0], HIGH);
+  
+  if (sensor[0] != 22){
+    switchRelay(sensor[0], HIGH);
+  }
+  
   delay(preReadDelay);
   
-//  Serial.print("ads1115 port is : ");
-//  Serial.println(sensor[1]);
+  Serialprint("ads1115 port is : ");
+  Serialprintln(String(sensor[1]));
+  Serialprintln("trying to read the ads1115");
+
   float sensor_value;
-//  Serial.println("trying to read the ads1115");
   sensor_value = ads.readADC_SingleEnded(sensor[1]);
   delay(preReadDelay);
-//  Serial.print("sensor_value is : ");
-//  Serial.println(sensor_value);
+
+
+  Serialprint("sensor_value is : ");
+  Serialprintln(String(sensor_value));
+
+
+  if (sensor[0] != 22){
+    switchRelay(sensor[0], LOW);
+  }
+
   
-  switchRelay(sensor[0], LOW);
-//  Serial.println("now return");
+  Serialprintln("now return");
   return sensor_value;
 }
 
@@ -28,66 +41,56 @@ float sensorRead(int sensor[]) {
     log or save temperature value
 */
 
-
-float LightCalFact = 1;
-float LightCalOffset = 0;
-int Light_Sensor[2] = {4, Sensors.LightSensor}; // x:photoresistor powerpin y:photoresistor analog input pin number(on ads1115)
+int Light_Sensor[2] = {SensorsOut.LightSensor, Sensors.LightSensor};
 
 float lightSens() {
   float light_level;
-  light_level = sensorRead(Light_Sensor) * LightCalFact + LightCalOffset;
+  light_level = sensorRead(Light_Sensor) * Calibration.LightLevelFactor + Calibration.LightLevelOffset;
   return light_level;
 }
 
 
 /////////////Main tank water level sensor/////////////
-float mainLevelCalFact = 0.00003051757;
-float mainLevelCalOffset = 0;
-int main_Level_Sensor[2] = {9, Sensors.WaterLevelSensor}; // x: sensor power pin, y:sensor analog in pin
+int main_Level_Sensor[2] = {22, Sensors.WaterLevelSensor}; // x: sensor power pin, y:sensor analog in pin
 
 float mainTankLevel() {//todo : add system state for water level to avoid the consecutive reads.
-  float Water_Level;
-  digitalWrite(D7, HIGH);
-  Water_Level = sensorRead(main_Level_Sensor) * mainLevelCalFact + mainLevelCalOffset;
+  
+  digitalWrite(SensorsOut.WaterLevelSensor, HIGH);
+  delay(400);
+  float sensorread = sensorRead(main_Level_Sensor);
+  Variables.WaterLevel = Calibration.WaterLevelFactor * sensorread  + Calibration.WaterLevelOffset;
+  
   Serial.print("WaterLevel : ");
-  Serial.println(Water_Level);
-  digitalWrite(D7, LOW);
-  return Water_Level;
+  Serial.println(Variables.WaterLevel);
+  
+  digitalWrite(SensorsOut.WaterLevelSensor, LOW);
+  return Variables.WaterLevel; //remove returns and just use the global variables
 }
-
-
-
-/////////////secondary tank water level sensor/////////
-//float secondaryLevelCalFact = 0.00003051757;
-//float secondaryLevelCalOffset = 0;
-//int secondary_Level_Sensor[2] = {9, 4}; // x: sensor power pin, y:sensor analog in pin
-//
-//float secondaryTankLevel() {
-//  float Water_Level;
-//  Water_Level = sensorRead(secondary_Level_Sensor) * secondaryLevelCalFact + secondaryLevelCalOffset;
-//  Serial.print("water level sensor value : ");
-//  Serial.println(Water_Level);
-//  return Water_Level;
-//}
 
 
 // ---------------------------------------- population management ---------------------------------
 /*  photodensity sensor
 */
-////////////////////////////////////////////////////////
-int densityPhotoresistor[2] = {Relays.DensitySensor, Sensors.DensitySensor}; // x:photoresistor power pin y:photoresistor analog input pin
+
+int densityPhotoresistor[2] = {22, Sensors.DensitySensor};
 
 float PopulationManagement() {
-  digitalWrite(D7, HIGH);
-  float density;
-  density = sensorRead(densityPhotoresistor);
-  if (density*0.0012872774 > 2){
+  digitalWrite(SensorsOut.DensitySensor, HIGH);
+  
+  Variables.Density = Calibration.DensityFactor * sensorRead(densityPhotoresistor) + Calibration.DensityOffset;
+  
+  Serial.print("population density : ");
+  Serial.println(Variables.Density);
+  // remove activation from here and put seperately in controls.  --->
+  if (Variables.Density * 0.0012872774 > 2){//todo replace with calib vars
      extraction_on();
   }else{
     extraction_off();
   }
-  digitalWrite(D7, LOW);
-  return density;
+  //<--
+  
+  digitalWrite(SensorsOut.DensitySensor, LOW);
+  return Variables.Density;//remove returns and just use the global variables
 }
 
 
@@ -99,22 +102,22 @@ float PopulationManagement() {
     ph dosing(screw motor)
 */
 
-int phSensor[2] = {3, Sensors.PhSensor}; //x: main power relay pin or number y: ph analog input
-//int phCalFact = 34;
-//float phCalOffset1 = 2.55/5-0.1;
-//int phCalOffset2 = 7;
-
-
+int phSensor[2] = {SensorsOut.PhSensor, Sensors.PhSensor}; //x: main power relay pin or number y: ph analog input
 
 
 float ph_sens() {
+  Aeration_off();
   float ph;
   float phCalFact = -0.0012872774;        //-776.833333333
   float phCalOffset = 24.6461703497;                   //-4.84617034971
-  float phread = sensorRead(phSensor);
+  float phread;
   
-  ph = phCalFact*phread + phCalOffset;
-//  ph = (phCalOffset1*phCalFact - phread*phCalFact/32768) + phCalOffset2;
+  delay(5000);        //todo : replace delay with timestamps
+  phread = sensorRead(phSensor);
+  delay(200);
+  
+  ph = phread* phCalFact* + phCalOffset;
+  
   Serial.println();
   Serial.print("phread : ");
   Serial.println(phread);
@@ -126,35 +129,25 @@ float ph_sens() {
   Serial.println(phCalFact);
   Serial.print("ph : ");
   Serial.println(ph);
+  
+  Aeration_on();
+  
   return ph;
 }
-// calibrating ph sensor with a linear fonctions
-//int calPh4;
-//int calPh13;
-//void calPh4_read(){
-//  sensorRead(phSensor);  
-//  r
-//
-//}
-//
-//void 
-//
-//ph=a*v+b
-//
-//int a = (ph2-ph1)/(v2-v1);
-
 
 
 
 
 ///////////////// thermometers input ////////////
+
 int tempCalFact = 1;
 int tempCalOffset = 0 ;
 int numberOfDevices;
-#define ONE_WIRE_BUS 14 //x: the pin for thermometer read
+#define ONE_WIRE_BUS 14          //x: the pin for thermometer read
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
+
 
 void setup_thermometer(){
   sensors.begin();
@@ -181,10 +174,10 @@ void setup_thermometer(){
       float tempC = sensors.getTempC(tempDeviceAddress);
       Serial.print("Temp C: ");
       Serial.println(tempC);
-
     }
   }
 }
+
 float temperature_sens() {  // todo : add a power up and reset of ds18b20
   float temp;
   sensors.requestTemperatures();

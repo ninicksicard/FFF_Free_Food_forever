@@ -4,6 +4,9 @@ void setup_routine(){
   sensorReading3();
   sensorReading4();
   sensorReading5();
+  //LightCycleManager();
+  TemperatureCycleManagement();
+  TimeProfileManagement();
 }
 void routine(){
   //temperature
@@ -16,7 +19,7 @@ void routine(){
   if ((millis() - Timestamps.LightRead) > (GraphUpdates.LightRead * 1000)) {
     Serial.println("reading light level");
     sensorReading2();
-    LightCycleManager();
+    //LightCycleManager();
   }
   //water level
   if ((millis() - Timestamps.WaterLevel) > (GraphUpdates.WaterLevel * 1000)) {
@@ -25,13 +28,13 @@ void routine(){
     sensorReading3();
   }
    // Graph 4 population density
-  if ((millis() - Timestamps.PopulationRead) > (GraphUpdates.PopulationRead * 1000)) {
+  if (FeatureEnable.DensityRead && (millis() - Timestamps.PopulationRead) > (GraphUpdates.PopulationRead * 1000)) {
     Serial.println("reading population density");
     sensorReading4();
   }
   
   // Graph 5 Ph graph   
-  if ((millis() - Timestamps.PhRead) > (GraphUpdates.PhRead * 1000)) {
+  if (FeatureEnable.PhRead && (millis() - Timestamps.PhRead) > (GraphUpdates.PhRead * 1000)) {
     Serial.println("reading Ph value");
     sensorReading5();
   }
