@@ -11,22 +11,22 @@ typedef struct {
 
 // en secondes
 CycleDurations GraphUpdates = {
-  400,    //   GraphUpdates.TempRead
-  200,    //   GraphUpdates.LightRead
+  60,    //   GraphUpdates.TempRead
+  700,    //   GraphUpdates.LightRead
   20,     //   GraphUpdates.WaterLevel
   80,   //   GraphUpdates.PopulationRead
-  600,    //   GraphUpdates.PhRead   
-  300,    //   GraphUpdates.TimeCheck
-  10      //   
+  120,    //   GraphUpdates.PhRead   
+  50,    //   GraphUpdates.TimeCheck
+  10      //   GraphUpdates.Global
 };
 
 CycleDurations ControlCycles = {
-  120,    //   ControlCycles.TempRead;
-  90,     //   ControlCycles.LightRead;
-  60,     //   ControlCycles.WaterLevel;
-  20,    //   ControlCycles.PopulationRead;
-  400,    //   ControlCycles.PhRead;
-  300,    //   ControlCycles.TimeCheck;
+  60,    //   ControlCycles.TempRead;
+  700,     //   ControlCycles.LightRead;
+  20,     //   ControlCycles.WaterLevel;
+  80,    //   ControlCycles.PopulationRead;
+  120,    //   ControlCycles.PhRead;
+  50,    //   ControlCycles.TimeCheck;
   10      //   ControlCycles.Global
 };
 
@@ -38,6 +38,16 @@ CycleDurations Timestamps = {
   millis(),   //Timestamps.PhRead
   millis(),   //Timestamps.TimeCheck
   millis()    //Timestamps.Global
+};
+
+CycleDurations LastValue = {
+  0, 
+  0,
+  0,
+  0,
+  0,
+  0,
+  0
 };
 
 //todo add the ready to harvest parameter
@@ -60,19 +70,19 @@ Limits Temps = {
 };
 
 typedef struct{
-  double WaterMaxTreshold;
-  double WaterLevel;
-  double DensityHighTreshold;
-  double DensityLowTreshold;
-  double Density;
+  float WaterMaxTreshold;
+  float WaterLevel;
+  float DensityHighTreshold;
+  float DensityLowTreshold;
+  float Density;
 }Things;
 
 Things Variables = {
-  25600,  //  Variables.WaterLevelTreshold
-  0,  //  Variables.WaterLevel
-  1,  //  Variables.DensityHighTreshold
-  0,  //  Variables.DensityLowTreshold
-  0   //  Variables.Density
+  12000,  //  Variables.WaterLevelTreshold 11197.00 = in water 14296 = ot in water
+  0,      //  Variables.WaterLevel
+  1,      //  Variables.DensityHighTreshold
+  0,      //  Variables.DensityLowTreshold
+  0       //  Variables.Density
 };
 
 typedef struct{
@@ -172,7 +182,7 @@ Feature FeatureEnable = {
   true,
   true,
   false,
-  false,
+  true,
   true,
   true,
   true
@@ -182,12 +192,11 @@ Feature FeatureAvailable = {
   true,
   true,
   false,
-  false,
+  true,
   true,
   true,
   true
 };
-
 
 typedef struct{
   double phOffset;
@@ -201,8 +210,8 @@ typedef struct{
 }calvars;
 
 calvars Calibration = {
-  24.6461703497,  //  phoffet 
-  -0.0012872774,  //  phfactor
+  24.6461703497,  //  Calibration.phOffset       todo : retrieve from memory
+  -0.0012872774,  //  Calibration.phFactor      todo : retrieve from memory
   0,              //  DensityOffset
   1,              //  DensityFact
   0,              //  WaterLevelOffset
@@ -212,3 +221,19 @@ calvars Calibration = {
 };
 
 float waterLevel;
+
+
+typedef struct{
+  float calibrate_7;
+  float calibrate_4;
+  float calibrate_10;
+  float value;
+}PhSensorVariables;
+
+
+PhSensorVariables Ph_Sensor_Variables = {
+  0,
+  0,
+  0,
+  -1
+};

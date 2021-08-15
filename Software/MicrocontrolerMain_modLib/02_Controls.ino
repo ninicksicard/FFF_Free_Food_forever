@@ -74,7 +74,7 @@ void Aeration_on()  {
    *  it also print a text update and change the pump's 
    *  state in the system memory
    */
-  if (FeatureEnable.Aeration){
+  if (FeatureEnable.Aeration && FeatureAvailable.Aeration){
     switchRelay(Relays.AirPump, HIGH);
     Serial.println("AirPump On");
     SystemStates.AirPump = true;
@@ -109,7 +109,7 @@ void waterPump_on() {
    *  it also print a text update and change the pump's 
    *  state in the system memory
    */
-  if (FeatureEnable.WaterLevel) {
+  if (FeatureEnable.WaterLevel && FeatureAvailable.WaterLevel) {
     switchRelay(Relays.WaterPump, HIGH);
     Serial.println("water Pump turned on");
     SystemStates.WaterPump = true;
@@ -136,14 +136,13 @@ int waterLevelControl() {
    *  it turns the water pump on or off 
    *  todo : check wats up with the return 1
    */
-    Serial.print("comparison : ");
-    Serial.println(Variables.WaterLevel > Variables.WaterMaxTreshold );
-    Serial.print("waterlevel : ");
-    Serial.println(Variables.WaterLevel);
-    Serial.print("treshold value : ");
-    Serial.println(Variables.WaterMaxTreshold);
+    Serialprint("comparison : ");
+    Serialprintln(String(Variables.WaterLevel > Variables.WaterMaxTreshold) );
+    Serialprint("waterlevel : ");
+    Serialprintln(String(Variables.WaterLevel));
+    Serialprint("treshold value : ");
+    Serialprintln(String(Variables.WaterMaxTreshold));
   if (Variables.WaterLevel > Variables.WaterMaxTreshold ) {
-    
     if (!SystemStates.WaterPump){
        waterPump_on();
     }

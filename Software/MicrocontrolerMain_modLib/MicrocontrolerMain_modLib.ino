@@ -10,6 +10,7 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <DS3231.h>
+#include <EEPROM.h>
 
 // -------- time ------
 const long utcOffsetInSeconds = -4 * 3600;
@@ -17,6 +18,7 @@ int morningtime = 6;
 int noontime = 20;
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 WiFiUDP ntpUDP;
+
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 DS3231 t;
 bool h12Flag;
@@ -33,14 +35,16 @@ Adafruit_ADS1115 ads;
 
 
 //-------- wifi -----------
-ESP8266WebServer server(80);
-SensorPlot_WebInterface webInterface = SensorPlot_WebInterface();
+WiFiServer server(80);
 
 
 ////////////////////////////
 
 void setup() {
   Serial.begin(115200);
+
+  EEPROM.begin(512);
+  
   Wire.begin(D1, D2);     //sda,scl
   Serial.print(Wire.available());
   ads.begin();
@@ -65,6 +69,4 @@ void setup() {
 
 void loop() {
   routine();
-  delay(50);
-  server.handleClient();
 }

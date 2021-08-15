@@ -3,13 +3,13 @@
 float sensorRead(int sensor[]) {
   Serialprintln("reading sensor");
   //sensor is a list of 2 ints, [power pin, read pin]
-  
-  if (sensor[0] != 22){
+
+  if (sensor[0] != 22) {
     switchRelay(sensor[0], HIGH);
   }
-  
+
   delay(preReadDelay);
-  
+
   Serialprint("ads1115 port is : ");
   Serialprintln(String(sensor[1]));
   Serialprintln("trying to read the ads1115");
@@ -23,11 +23,11 @@ float sensorRead(int sensor[]) {
   Serialprintln(String(sensor_value));
 
 
-  if (sensor[0] != 22){
+  if (sensor[0] != 22) {
     switchRelay(sensor[0], LOW);
   }
 
-  
+
   Serialprintln("now return");
   return sensor_value;
 }
@@ -54,15 +54,15 @@ float lightSens() {
 int main_Level_Sensor[2] = {22, Sensors.WaterLevelSensor}; // x: sensor power pin, y:sensor analog in pin
 
 float mainTankLevel() {//todo : add system state for water level to avoid the consecutive reads.
-  
+
   digitalWrite(SensorsOut.WaterLevelSensor, HIGH);
   delay(400);
   float sensorread = sensorRead(main_Level_Sensor);
   Variables.WaterLevel = Calibration.WaterLevelFactor * sensorread  + Calibration.WaterLevelOffset;
-  
+
   Serial.print("WaterLevel : ");
   Serial.println(Variables.WaterLevel);
-  
+
   digitalWrite(SensorsOut.WaterLevelSensor, LOW);
   return Variables.WaterLevel; //remove returns and just use the global variables
 }
@@ -76,19 +76,19 @@ int densityPhotoresistor[2] = {22, Sensors.DensitySensor};
 
 float PopulationManagement() {
   digitalWrite(SensorsOut.DensitySensor, HIGH);
-  
+
   Variables.Density = Calibration.DensityFactor * sensorRead(densityPhotoresistor) + Calibration.DensityOffset;
-  
+
   Serial.print("population density : ");
   Serial.println(Variables.Density);
   // remove activation from here and put seperately in controls.  --->
-  if (Variables.Density * 0.0012872774 > 2){//todo replace with calib vars
-     extraction_on();
-  }else{
+  if (Variables.Density * 0.0012872774 > 2) { //todo replace with calib vars
+    extraction_on();
+  } else {
     extraction_off();
   }
   //<--
-  
+
   digitalWrite(SensorsOut.DensitySensor, LOW);
   return Variables.Density;//remove returns and just use the global variables
 }
@@ -104,35 +104,122 @@ float PopulationManagement() {
 
 int phSensor[2] = {SensorsOut.PhSensor, Sensors.PhSensor}; //x: main power relay pin or number y: ph analog input
 
+void Setup_pH_Sensor() {
+  int storedoffset = eeGetInt(1);
+  int storedfact = eeGetInt(2);
+  Serial.print("stored phOffset = ");
+  Serial.print(storedoffset);
+  Serial.print("stored phFact = ");
+  Serial.print(storedfact);
+  if (storedoffset != 0 && storedfact != 0) {
+    Serial.print("stored phOffset = ");
+    Serial.print(storedoffset);
+    Calibration.phOffset = storedoffset;
+    Serial.print("stored phFact = ");
+    Serial.print(storedfact);
+    Calibration.phFactor = storedfact ;
+  } else {
+    Serial.println("no calibration data stored on device");
+  }
+}
+
+void Calibrate_pH_sensor() {
+  if (Ph_Sensor_Variables.calibrate_7 != 0) {
+    if (Ph_Sensor_Variables.calibrate_4 != 0) {
+      if (Ph_Sensor_Variables.calibrate_10 != 0) {
+        float fact = 3 / (Ph_Sensor_Variables.calibrate_10 - Ph_Sensor_Variables.calibrate_7);
+        float offset = 7 - fact * Ph_Sensor_Variables.calibrate_7;
+
+        Serial.print("imprecision at 10 : ");
+        Serial.print( Ph_Sensor_Variables.calibrate_10 * fact + offset);
+        Serial.print(" - 10 = ");
+        Serial.println(Ph_Sensor_Variables.calibrate_10 * fact + offset - 10);
+        Serial.print("imprecision at 4 : ");
+        Serial.print(Ph_Sensor_Variables.calibrate_4 * fact + offset);
+        Serial.print(" - 4 = ");
+        Serial.println(Ph_Sensor_Variables.calibrate_4 * fact + offset - 4);
+
+        Calibration.phOffset = offset;
+        Calibration.phFactor = fact;
+        Serial.print("Calibration.phoffet = ");
+        Serial.println(Calibration.phOffset);
+        Serial.print("Calibration.phfactor = ");
+        Serial.println(Calibration.phFactor);
+        eeWriteInt(1, Calibration.phOffset);
+        eeWriteInt(2, Calibration.phFactor);
+      }
+      else {
+        Serial.println("please calibrate at ph 10");
+      }
+    } else {
+      Serial.println("please calibrate at ph 4");
+    }
+  } else {
+    Serial.println("please calibrate at ph 7");
+  }
+}
+
+void Set_pH_Calibrate_7() {
+  Aeration_off();
+  delay(1000);
+  Ph_Sensor_Variables.calibrate_7 = sensorRead(phSensor);
+  Serial.print("Ph_Sensor_Variables.calibrate_7 = ");
+  Serial.println(Ph_Sensor_Variables.calibrate_7);
+  Calibrate_pH_sensor();
+  Aeration_on();
+}
+
+void Set_pH_Calibrate_10() {
+  Aeration_off();
+  delay(1000);
+  Ph_Sensor_Variables.calibrate_10 = sensorRead(phSensor);
+  Serial.print("Ph_Sensor_Variables.calibrate_10 = ");
+  Serial.println(Ph_Sensor_Variables.calibrate_10);
+  Calibrate_pH_sensor();
+  Aeration_on();
+}
+
+void Set_pH_Calibrate_4() {
+  Aeration_off();
+  delay(1000);
+  Ph_Sensor_Variables.calibrate_4 = sensorRead(phSensor);
+  Serial.print("Ph_Sensor_Variables.calibrate_4 = ");
+  Serial.println(Ph_Sensor_Variables.calibrate_4);
+  Calibrate_pH_sensor();
+  Aeration_on();
+}
 
 float ph_sens() {
   Aeration_off();
   float ph;
-  float phCalFact = -0.0012872774;        //-776.833333333
-  float phCalOffset = 24.6461703497;                   //-4.84617034971
+  float phCalFact = Calibration.phFactor;        //-776.833333333
+  float phCalOffset = Calibration.phOffset;                   //-4.84617034971
   float phread;
-  
-  delay(5000);        //todo : replace delay with timestamps
+
+  delay(4000);        //todo : replace delay with timestamps
   phread = sensorRead(phSensor);
-  delay(200);
-  
-  ph = phread* phCalFact* + phCalOffset;
-  
+  delay(100);
+
+  ph = phread * phCalFact * + phCalOffset;
+
   Serial.println();
   Serial.print("phread : ");
   Serial.println(phread);
   Serial.print("phCalFact*phread : ");
-  Serial.println(phCalFact*phread);
+  Serial.println(phCalFact * phread);
   Serial.print("phCalOffset : ");
   Serial.println(phCalOffset);
   Serial.print("phCalFact : ");
   Serial.println(phCalFact);
   Serial.print("ph : ");
   Serial.println(ph);
-  
+
   Aeration_on();
-  
-  return ph;
+  if (ph>0){
+      return ph;
+  }else 
+  return -1;
+
 }
 
 
@@ -149,7 +236,7 @@ DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
 
 
-void setup_thermometer(){
+void setup_thermometer() {
   sensors.begin();
   numberOfDevices = sensors.getDeviceCount();
   // locate devices on the bus
@@ -181,7 +268,7 @@ void setup_thermometer(){
 float temperature_sens() {  // todo : add a power up and reset of ds18b20
   float temp;
   sensors.requestTemperatures();
- // oneWire.reset();
+  // oneWire.reset();
   temp = sensors.getTempC(tempDeviceAddress) * tempCalFact + tempCalOffset;
   return temp;
 }

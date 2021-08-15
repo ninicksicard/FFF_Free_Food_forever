@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////TimeManagement///////////////////////////////////
 
-void printTime(){
+void printTime() {
   Serial.print(t.getHour(h12Flag, pmFlag));
   Serial.print(":");
   Serial.print(t.getMinute());
@@ -8,38 +8,45 @@ void printTime(){
   Serial.println(t.getSecond());
 }
 
-void UpdateRTC(){
+void UpdateRTC() {
   t.setClockMode(false);  // set to 24h
   t.setHour((int)timeClient.getHours());
   t.setMinute((int)timeClient.getMinutes());
-  t.setSecond((int)timeClient.getSeconds()); 
+  t.setSecond((int)timeClient.getSeconds());
 }
 
-void SyncOnlineTime(){
+void SyncOnlineTime() {
   timeClient.update();
   UpdateRTC();
 }
 
 
-int GetHour(){
-  if (WiFi.status() == WL_CONNECTED ){
+int GetHour() {
+  if (WiFi.status() == WL_CONNECTED ) {
     SyncOnlineTime();
   }
   printTime();
   return t.getHour(h12Flag, pmFlag);
 }
-int GetMinute(){
-  if (WiFi.status() == WL_CONNECTED ){
+int GetMinute() {
+  if (WiFi.status() == WL_CONNECTED ) {
     SyncOnlineTime();
   }
   printTime();
   return t.getMinute();
 }
 
-void TimeProfileManagement(){
+bool IsDaytime() {
   int nowhour = GetHour();
-  int nowminute = GetMinute();
-  if (morningtime < nowhour&&nowhour<noontime){
+  if (morningtime < nowhour && nowhour < noontime) {
+    return true;
+  }
+  return false;
+}
+
+void TimeProfileManagement() {
+  int nowhour = GetHour();
+  if (IsDaytime()) {
     Serial.println("day time");
     GraphUpdates.PhRead = 50; // duration in seconds
     if (SystemStates.NightTime) {
@@ -49,28 +56,23 @@ void TimeProfileManagement(){
       FeatureEnable.PhRead = true;
       SystemStates.NightTime = false;
     }
-    if (nowminute<10){
-      FeatureEnable.Aeration = false;
-    }else if (nowminute>20){
-      FeatureEnable.Aeration = false;
-    }
     Aeration_on();
     //Lights on
-    if (!SystemStates.Lights){
+    if (!SystemStates.Lights) {
       lightSwitch_on();
     }
-    
+
     //Daytime temperature
-    if (!SystemStates.Heat){//todo make sure day/night have their own system states
+    if (!SystemStates.Heat) { //todo make sure day/night have their own system states
       Temps.MinTreshold = Temps.DayMin;
       Temps.MaxTreshold = Temps.DayMax;
       Serial.println("DayTime temperatures");
-      
+
     }
   }
   //SetupNight time profile
-  
-  else{
+
+  else {
     Serial.println("night time");
     GraphUpdates.PhRead = 3600; // duration in seconds
     if (!SystemStates.NightTime) {
@@ -81,18 +83,18 @@ void TimeProfileManagement(){
       FeatureEnable.PhRead = false;
       SystemStates.NightTime = true;
     }
-    
+
     //Lights off
-    if (SystemStates.Lights){
+    if (SystemStates.Lights) {
       lightSwitch_off();
     }
-    
+
     //NightTime temperatures
-    if (SystemStates.Heat){
+    if (SystemStates.Heat) {
       Temps.MinTreshold = Temps.NightMin;
       Temps.MaxTreshold = Temps.NightMax;
       Serial.println("NightTime temperatures");
-      
+
     }
   }
 }
