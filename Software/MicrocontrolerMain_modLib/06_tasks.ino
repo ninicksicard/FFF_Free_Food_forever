@@ -1,8 +1,8 @@
 void setup_routine(){
   LastValue.TempRead = temperature_sens();
-  LastValue.LightRead = lightSens() * 0.00003051757;
+  LastValue.LightRead = lightSens();
   LastValue.WaterLevel = mainTankLevel();
-  LastValue.PopulationRead = PopulationManagement() * 0.0012872774;
+  LastValue.PopulationRead = PopulationManagement();
   LastValue.PhRead = ph_sens();
   Setup_pH_Sensor();  
   
@@ -21,7 +21,7 @@ void routine(){
   //light 
   if ((millis() - Timestamps.LightRead) > (GraphUpdates.LightRead * 1000)) {
     Serial.println("reading light level");
-    LastValue.LightRead = lightSens() * 0.00003051757;
+    LastValue.LightRead = lightSens();
     //LightCycleManager();
     Timestamps.LightRead = millis();
   }
@@ -34,10 +34,10 @@ void routine(){
     
   }
    // Graph 4 population density
-  if (FeatureEnable.DensityRead && (millis() - Timestamps.PopulationRead) > (GraphUpdates.PopulationRead * 1000)) {
+  if ((millis() - Timestamps.PopulationRead) > (GraphUpdates.PopulationRead * 1000)) {
     Serial.println("reading population density");
-    LastValue.PopulationRead = PopulationManagement() * 0.0012872774;
-    Timestamps.PopulationRead=millis();
+    LastValue.PopulationRead = PopulationManagement();
+    Timestamps.PopulationRead = millis();
   }
   
   // Graph 5 Ph graph   

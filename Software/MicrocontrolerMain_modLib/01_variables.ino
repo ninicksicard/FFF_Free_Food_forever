@@ -14,7 +14,7 @@ CycleDurations GraphUpdates = {
   60,    //   GraphUpdates.TempRead
   700,    //   GraphUpdates.LightRead
   20,     //   GraphUpdates.WaterLevel
-  80,   //   GraphUpdates.PopulationRead
+  20,   //   GraphUpdates.PopulationRead
   120,    //   GraphUpdates.PhRead   
   50,    //   GraphUpdates.TimeCheck
   10      //   GraphUpdates.Global
@@ -24,7 +24,7 @@ CycleDurations ControlCycles = {
   60,    //   ControlCycles.TempRead;
   700,     //   ControlCycles.LightRead;
   20,     //   ControlCycles.WaterLevel;
-  80,    //   ControlCycles.PopulationRead;
+  20,    //   ControlCycles.PopulationRead;
   120,    //   ControlCycles.PhRead;
   50,    //   ControlCycles.TimeCheck;
   10      //   ControlCycles.Global
@@ -212,12 +212,12 @@ typedef struct{
 calvars Calibration = {
   24.6461703497,  //  Calibration.phOffset       todo : retrieve from memory
   -0.0012872774,  //  Calibration.phFactor      todo : retrieve from memory
-  0,              //  DensityOffset
-  1,              //  DensityFact
-  0,              //  WaterLevelOffset
-  1,              //  WaterLevelFactor
-  0,              //  LightLevelOffset
-  1               //  LightLevelFactor
+  0,              //  Calibration.DensityOffset
+  1,              //  Calibration.DensityFactor
+  0,              //  Calibration.WaterLevelOffset
+  1,              //  Calibration.WaterLevelFactor
+  0,              //  Calibration.LightLevelOffset
+  1               //  Calibration.LightLevelFactor
 };
 
 float waterLevel;

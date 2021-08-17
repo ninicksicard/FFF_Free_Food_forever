@@ -56,7 +56,8 @@ int main_Level_Sensor[2] = {22, Sensors.WaterLevelSensor}; // x: sensor power pi
 float mainTankLevel() {//todo : add system state for water level to avoid the consecutive reads.
 
   digitalWrite(SensorsOut.WaterLevelSensor, HIGH);
-  delay(400);
+  delay(100);
+  
   float sensorread = sensorRead(main_Level_Sensor);
   Variables.WaterLevel = Calibration.WaterLevelFactor * sensorread  + Calibration.WaterLevelOffset;
 
@@ -76,13 +77,15 @@ int densityPhotoresistor[2] = {22, Sensors.DensitySensor};
 
 float PopulationManagement() {
   digitalWrite(SensorsOut.DensitySensor, HIGH);
-
-  Variables.Density = Calibration.DensityFactor * sensorRead(densityPhotoresistor) + Calibration.DensityOffset;
-
+  delay(100);
+  float sensorread = sensorRead(densityPhotoresistor);
+  Variables.Density = Calibration.DensityFactor * sensorread + Calibration.DensityOffset;
+  LastValue.PopulationRead = Variables.Density;
   Serial.print("population density : ");
   Serial.println(Variables.Density);
+  
   // remove activation from here and put seperately in controls.  --->
-  if (Variables.Density * 0.0012872774 > 2) { //todo replace with calib vars
+  if (Variables.Density > 2) { //todo replace with calib vars
     extraction_on();
   } else {
     extraction_off();
@@ -90,6 +93,7 @@ float PopulationManagement() {
   //<--
 
   digitalWrite(SensorsOut.DensitySensor, LOW);
+  
   return Variables.Density;//remove returns and just use the global variables
 }
 
