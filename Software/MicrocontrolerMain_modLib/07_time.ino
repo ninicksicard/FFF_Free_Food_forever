@@ -1,13 +1,5 @@
 ///////////////////////////////////////////////////////TimeManagement///////////////////////////////////
 
-void printTime() {
-  Serial.print(t.getHour(h12Flag, pmFlag));
-  Serial.print(":");
-  Serial.print(t.getMinute());
-  Serial.print(":");
-  Serial.println(t.getSecond());
-}
-
 void UpdateRTC() {
   t.setClockMode(false);  // set to 24h
   t.setHour((int)timeClient.getHours());
@@ -20,19 +12,21 @@ void SyncOnlineTime() {
   UpdateRTC();
 }
 
+// not sure why it needs to be as variables.
+bool h12flag;
+bool pmflag;
 
 int GetHour() {
   if (WiFi.status() == WL_CONNECTED ) {
     SyncOnlineTime();
   }
-  printTime();
-  return t.getHour(h12Flag, pmFlag);
+  return t.getHour(h12flag, pmflag);
 }
 int GetMinute() {
   if (WiFi.status() == WL_CONNECTED ) {
     SyncOnlineTime();
   }
-  printTime();
+  
   return t.getMinute();
 }
 

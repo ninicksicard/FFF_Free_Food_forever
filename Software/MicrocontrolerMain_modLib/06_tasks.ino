@@ -1,4 +1,6 @@
 void setup_routine(){
+  setup_relays();
+  setup_thermometer();
   LastValue.TempRead = temperature_sens();
   LastValue.LightRead = lightSens();
   LastValue.WaterLevel = mainTankLevel();
@@ -18,14 +20,15 @@ void routine(){
     TemperatureCycleManagement();
     Timestamps.TempRead = millis();
   }
+  
   //light 
   if ((millis() - Timestamps.LightRead) > (GraphUpdates.LightRead * 1000)) {
     Serial.println("reading light level");
     LastValue.LightRead = lightSens();
-    //LightCycleManager();
     Timestamps.LightRead = millis();
   }
-  //water level
+  
+  // water level
   if ((millis() - Timestamps.WaterLevel) > (GraphUpdates.WaterLevel * 1000)) {
     Serial.println("reading water level");
     LastValue.WaterLevel = mainTankLevel();
@@ -33,26 +36,26 @@ void routine(){
     Timestamps.WaterLevel = millis();
     
   }
-   // Graph 4 population density
+  // population density
   if ((millis() - Timestamps.PopulationRead) > (GraphUpdates.PopulationRead * 1000)) {
     Serial.println("reading population density");
     LastValue.PopulationRead = PopulationManagement();
     Timestamps.PopulationRead = millis();
   }
   
-  // Graph 5 Ph graph   
+  // pH graph   
   if (FeatureEnable.PhRead && (millis() - Timestamps.PhRead) > (GraphUpdates.PhRead * 1000)) {
     Serial.println("reading Ph value");
     LastValue.PhRead = ph_sens();
     Timestamps.PhRead = millis();
   }
 
-
   // manage clocks
   if ((millis() - Timestamps.TimeCheck) > (GraphUpdates.TimeCheck * 1000)) {
     TimeProfileManagement();
     Timestamps.TimeCheck = millis();
   }
+  
   // update web interface
   UI_loop();
 }

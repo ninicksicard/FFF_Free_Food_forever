@@ -1,6 +1,16 @@
-///////////////////////////////////////////////////////All variables////////////////////////////////////
+/*  contains most of the variables. the system works mostly 
+ *  with global variables. This allows for better timing of  
+ *  tasks without the need to read the sensors again and again.
+ */
+
+
+int morningtime = 6;
+int noontime = 20;
+char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+int preReadDelay = 400; //ms before reading analog input to ensure stabilised sensor voltage
+
 typedef struct {
-  int TempRead;
+  float TempRead;
   int LightRead;
   int WaterLevel;
   int PopulationRead;
@@ -80,7 +90,7 @@ typedef struct{
 Things Variables = {
   12000,  //  Variables.WaterLevelTreshold 11197.00 = in water 14296 = ot in water
   0,      //  Variables.WaterLevel
-  1,      //  Variables.DensityHighTreshold
+  2000,      //  Variables.DensityHighTreshold
   0,      //  Variables.DensityLowTreshold
   0       //  Variables.Density
 };
@@ -119,8 +129,8 @@ typedef struct{
  */
 
 PinOut Relays = {
-  0,  // Lights;        120v  AC
-  1,  // Heat;          120v  AC
+  0,  // Lights;        110v  AC
+  1,  // Heat;          110v  AC
   12, // WaterPump;     12v   DC
   22, //--- WaterWheel;    5v    DC  // using 22 for null value
   4,  // AirPump;       12v   DC
@@ -129,6 +139,8 @@ PinOut Relays = {
   22, // ---Fan            12v   DC
   22,  // ---density sensor 5v    DC
   22
+  // water level and density sensor
+  // 7 output pins needed 
 };
 
 PinOut SystemStates = {
@@ -145,7 +157,7 @@ PinOut SystemStates = {
 };
 
 typedef struct{
-//  int Thermometer;
+  int Thermometer;
   int PhSensor;
   int WaterLevelSensor;
   int DensitySensor;
@@ -153,7 +165,7 @@ typedef struct{
 }Pins;
 
 Pins Sensors = {
-      // using a nodemcu pin Thermometer;
+   14,  // using a nodemcu pin Thermometer;
    3,   // 3 = A3   PhSensor;
    1,   // 1 = A1   WaterLevelSensor;
    0,   // 0 = A0   DensitySensor;
@@ -161,11 +173,11 @@ Pins Sensors = {
 };
 
 Pins SensorsOut = {
-  // none
+  22, // none
   22, //always on
   D7, // handeled by other function
   D7, // handeled by other function 
-  22 // always on
+  22  // always on
 };
 
 typedef struct{

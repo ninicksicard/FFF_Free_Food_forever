@@ -43,9 +43,9 @@ void UI_loop() {
             // buttons
             if (header.indexOf("GET /Aeration") >= 0) {
               FeatureAvailable.Aeration = !FeatureAvailable.Aeration;
-              if (FeatureAvailable.Aeration){
+              if (FeatureAvailable.Aeration) {
                 Aeration_on();
-              }else {
+              } else {
                 Aeration_off();
               }
             } else if (header.indexOf("GET /PhRead") >= 0) {
@@ -80,98 +80,106 @@ void UI_loop() {
                 FeatureAvailable.Lighting = true;
                 lightSwitch_on();
               }
-              
+
+            } else if (header.indexOf("GET /CalpH7") >= 0) {
+              Set_pH_Calibrate_7();
+            } else if (header.indexOf("GET /CalpH4") >= 0) {
+              Set_pH_Calibrate_4();
+            } else if (header.indexOf("GET /CalpH10") >= 0) {
+              Set_pH_Calibrate_10();
             }
-          
-          
 
-          // Display the HTML web page
-          client.println("<!DOCTYPE html><html>");
-          client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
-          client.println("<link rel=\"icon\" href=\"data:,\">");
-
-
-          client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
-
-
-          // Buttons display style
-
-          client.println(".button { background-color: #195B6A; border: none; color: white; padding: 16px 40px;");
-          client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-          client.println(".button2 {background-color: #77878A;}</style></head>");
-
-          // Web Page Heading
-          client.println("<body><h1>Spirulina Bioreactor</h1>");
-
-
-          client.println("<p>Temperature : " + String(LastValue.PhRead) + "</p>");
-          client.println("<p>pH :  " + String(LastValue.TempRead) + "</p>");
-          client.println("<p>Water Level : " + String(LastValue.WaterLevel) + "</p>");
-          client.println("<p>Density : " + String(LastValue.PopulationRead) + "</p>");
+            //todo add button for extraction density set 
 
 
 
-          // Display current Button 1 states (text above the button)
-          // lights button
-          client.println("<p>Lights are " + String(FeatureAvailable.Lighting) + "</p>");
-          client.println("<p><a href=\"/Lighting\"><button class=\"button\">Toggle</button></a></p>");
-
-          // heating button
-          client.println("<p>Heating is " + String(FeatureAvailable.Heating) + "</p>");
-          client.println("<p><a href=\"/Heating\"><button class=\"button\">Toggle</button></a></p>");
+            // Display the HTML web page
+            client.println("<!DOCTYPE html><html>");
+            client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
+            client.println("<link rel=\"icon\" href=\"data:,\">");
 
 
-          // Aeration button
-          client.println("<p>Aeration is " + String(FeatureAvailable.Aeration) + "</p>");
-          client.println("<p><a href=\"/Aeration\"><button class=\"button\">Toggle</button></a></p>");
-
-          // PhRead button
-          client.println("<p>Ph Sensor is " + String(FeatureAvailable.PhRead) + "</p>");
-          client.println("<p><a href=\"/PhRead\"><button class=\"button\">Toggle</button></a></p>");
-
-          // WaterWheel button
-          client.println("<p>WaterWheel is " + String(FeatureAvailable.WaterWheel) + "</p>");
-          client.println("<p><a href=\"/WaterWheel\"><button class=\"button\">Toggle</button></a></p>");
-
-          // WaterLevel button
-          client.println("<p>WaterLevel sensor is " + String(FeatureAvailable.WaterLevel) + "</p>");
-          client.println("<p><a href=\"/WaterLevel\"><button class=\"button\">Toggle</button></a></p>");
+            client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
 
 
+            // Buttons display style
 
-          // pHcalibration buttons
-//          client.println("<p>WaterLevel sensor is " + String(FeatureAvailable.WaterLevel) + "</p>");
-//          client.println("<p><a href=\"/WaterLevel\"><button class=\"button\">Toggle</button></a></p>");
-//          // WaterLevel button
-//          client.println("<p>WaterLevel sensor is " + String(FeatureAvailable.WaterLevel) + "</p>");
-//          client.println("<p><a href=\"/WaterLevel\"><button class=\"button\">Toggle</button></a></p>");
-//          // WaterLevel button
-//          client.println("<p>WaterLevel sensor is " + String(FeatureAvailable.WaterLevel) + "</p>");
-//          client.println("<p><a href=\"/WaterLevel\"><button class=\"button\">Toggle</button></a></p>");
+            client.println(".button { background-color: #195B6A; border: none; color: white; padding: 16px 40px;");
+            client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
+            client.println(".button2 {background-color: #77878A;}</style></head>");
+
+            // Web Page Heading
+            client.println("<body><h1>Spirulina Bioreactor</h1>");
 
 
-          client.println("</body></html>");
+            client.println("<p>Temperature : " + String(LastValue.TempRead) + "</p>");
+            client.println("<p>pH :  " + String(LastValue.PhRead) + "</p>");
+            client.println("<p>Water Level : " + String(LastValue.WaterLevel) + "</p>");
+            client.println("<p>Density : " + String(LastValue.PopulationRead) + "</p>");
 
-          // The HTTP response ends with another blank line
-          client.println();
 
-          // Break out of the while loop
-          break;
+            // todo : add condition to display all these buttons to return to the root address
+            // Display current Button 1 states (text above the button)
+            // lights button
+            client.println("<p>Lights are " + String(FeatureAvailable.Lighting) + "</p>");
+            client.println("<p><a href=\"/Lighting\"><button class=\"button\">Toggle</button></a></p>");
 
-        } else { // if you got a newline, then clear currentLine
-          currentLine = "";
+            // heating button
+            client.println("<p>Heating is " + String(FeatureAvailable.Heating) + "</p>");
+            client.println("<p><a href=\"/Heating\"><button class=\"button\">Toggle</button></a></p>");
+
+
+            // Aeration button
+            client.println("<p>Aeration is " + String(FeatureAvailable.Aeration) + "</p>");
+            client.println("<p><a href=\"/Aeration\"><button class=\"button\">Toggle</button></a></p>");
+
+            // PhRead button
+            client.println("<p>Ph Sensor is " + String(FeatureAvailable.PhRead) + "</p>");
+            client.println("<p><a href=\"/PhRead\"><button class=\"button\">Toggle</button></a></p>");
+
+            // WaterWheel button
+            client.println("<p>WaterWheel is " + String(FeatureAvailable.WaterWheel) + "</p>");
+            client.println("<p><a href=\"/WaterWheel\"><button class=\"button\">Toggle</button></a></p>");
+
+            // WaterLevel button
+            client.println("<p>WaterLevel sensor is " + String(FeatureAvailable.WaterLevel) + "</p>");
+            client.println("<p><a href=\"/WaterLevel\"><button class=\"button\">Toggle</button></a></p>");
+
+
+
+            //pHcalibration buttons 7
+            client.println("<p> pH 7 read value is " + String(Ph_Sensor_Variables.calibrate_7) + "</p>");
+            client.println("<p><a href=\"/CalpH7\"><button class=\"button\">Toggle</button></a></p>");
+            //pHcalibration buttons 4
+            client.println("<p>pH 4 read value is " + String(Ph_Sensor_Variables.calibrate_4) + "</p>");
+            client.println("<p><a href=\"/CalpH4\"><button class=\"button\">Toggle</button></a></p>");
+            //pHcalibration buttons 10
+            client.println("<p>pH 7 read value is 10 " + String(Ph_Sensor_Variables.calibrate_10) + "</p>");
+            client.println("<p><a href=\"/CalpH10\"><button class=\"button\">Toggle</button></a></p>");
+
+
+            client.println("</body></html>");
+
+            // The HTTP response ends with another blank line
+            client.println();
+
+            // Break out of the while loop
+            break;
+
+          } else { // if you got a newline, then clear currentLine
+            currentLine = "";
+          }
+        } else if (c != '\r') {  // if you got anything else but a carriage return character,
+          currentLine += c;      // add it to the end of the currentLine
         }
-      } else if (c != '\r') {  // if you got anything else but a carriage return character,
-        currentLine += c;      // add it to the end of the currentLine
       }
     }
-  }
 
-  // Clear the header variable
-  header = "";
-  // Close the connection
-  client.stop();
-  Serial.println("Client disconnected.");
-  Serial.println("");
-}
+    // Clear the header variable
+    header = "";
+    // Close the connection
+    client.stop();
+    Serial.println("Client disconnected.");
+    Serial.println("");
+  }
 }

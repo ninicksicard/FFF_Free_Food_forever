@@ -10,6 +10,8 @@ void Serialprintln(String toprint){
   }
 }
 
+
+// generalized functions to read and write to the internal memory
 void eeWriteInt(int pos, int val) {
     byte* p = (byte*) &val;
     EEPROM.write(pos, *p);
@@ -18,7 +20,6 @@ void eeWriteInt(int pos, int val) {
     EEPROM.write(pos + 3, *(p + 3));
     EEPROM.commit();
 }
-
 
 int eeGetInt(int pos) {
   int val;

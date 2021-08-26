@@ -3,7 +3,6 @@
 #include <DallasTemperature.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
-#include "src/sensorplot_webinterface/sensorplot_webinterface.h"
 #include <Adafruit_ADS1X15.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <NTPClient.h>
@@ -12,61 +11,69 @@
 #include <DS3231.h>
 #include <EEPROM.h>
 
-// -------- time ------
-const long utcOffsetInSeconds = -4 * 3600;
-int morningtime = 6;
-int noontime = 20;
-char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+// data transport protocol for wifi
 WiFiUDP ntpUDP;
 
+// ntp server object(online time)
+const long utcOffsetInSeconds = -4 * 3600;
+
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
+
+// clock module object (battery powered clock module)
 DS3231 t;
-bool h12Flag;
-bool pmFlag;
 
-
-// -------PWM -----------
+// pwm module pca9685
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
-int preReadDelay = 400; //ms before reading analog input to ensure stabilised sensor voltage
 
-
-//--------sensors---------
+// analog read module
 Adafruit_ADS1115 ads;
 
-
-//-------- wifi -----------
+// wifi server
 WiFiServer server(80);
 
 
-////////////////////////////
-
 void setup() {
+  // for serial communication with a pc
   Serial.begin(115200);
 
+  // internal memory for calibration values
   EEPROM.begin(512);
-  
-  Wire.begin(D1, D2);     //sda,scl
-  Serial.print(Wire.available());
+
+  // for I2C communication between modules
+  Wire.begin(D1, D2);     // Wire.begin(sda,scl);
+
+  // initialize analog read module
   ads.begin();
+
+  // initialize pwm module
   pwm.begin();
   pwm.setPWMFreq(1600);
+
+  // initialize time 
   timeClient.begin();
+
+  // todo : verify what could be done without pwm
+
+
+  // initialize output pin for water level and population density sensor
   pinMode(D7, OUTPUT);
   digitalWrite(D7, HIGH);
 
-  setup_relays();
-  setup_thermometer();
+  // initialize everything 
   setup_routine();
-  Serial.println("connecting to wifi");
+
+  // connect to wifi and do first tasks
   setup_wifi();
-
+  
+  // check for time
   GetHour();
-
   unsigned long epochTime = timeClient.getEpochTime();
- 
 }
 
-
 void loop() {
+  /*  trigger the routine function. 
+   *  it is a function located at the end of the code to make sure 
+   *  all the tasks are designed before it
+   */
   routine();
 }

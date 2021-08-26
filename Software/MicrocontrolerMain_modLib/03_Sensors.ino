@@ -53,11 +53,16 @@ float lightSens() {
 /////////////Main tank water level sensor/////////////
 int main_Level_Sensor[2] = {22, Sensors.WaterLevelSensor}; // x: sensor power pin, y:sensor analog in pin
 
-float mainTankLevel() {//todo : add system state for water level to avoid the consecutive reads.
+float mainTankLevel() {//todo : add system state for water level to avoid the consecutive reads. 
+  //todo : remove return and use global variables
+  if (!FeatureAvailable.DensityRead) {
+    Serial.println("WaterLevel unavaillable");
 
+    return -1;
+  }
   digitalWrite(SensorsOut.WaterLevelSensor, HIGH);
   delay(100);
-  
+
   float sensorread = sensorRead(main_Level_Sensor);
   Variables.WaterLevel = Calibration.WaterLevelFactor * sensorread  + Calibration.WaterLevelOffset;
 
@@ -75,7 +80,14 @@ float mainTankLevel() {//todo : add system state for water level to avoid the co
 
 int densityPhotoresistor[2] = {22, Sensors.DensitySensor};
 
+// todo : add set density treshold memory write that works with the button
+
 float PopulationManagement() {
+  if (!FeatureAvailable.DensityRead) {
+    Serial.println("DensityRead unavaillable");
+    extraction_off();
+    return -1;
+  }
   digitalWrite(SensorsOut.DensitySensor, HIGH);
   delay(100);
   float sensorread = sensorRead(densityPhotoresistor);
@@ -83,9 +95,10 @@ float PopulationManagement() {
   LastValue.PopulationRead = Variables.Density;
   Serial.print("population density : ");
   Serial.println(Variables.Density);
-  
-  // remove activation from here and put seperately in controls.  --->
-  if (Variables.Density > 2) { //todo replace with calib vars
+
+  // todo : remove activation from here and put seperately in controls.  --->
+  // todo : add system state for extraction
+  if (Variables.Density > Variables.DensityHighTreshold) {
     extraction_on();
   } else {
     extraction_off();
@@ -93,8 +106,8 @@ float PopulationManagement() {
   //<--
 
   digitalWrite(SensorsOut.DensitySensor, LOW);
-  
-  return Variables.Density;//remove returns and just use the global variables
+
+  return Variables.Density; //remove returns and just use the global variables
 }
 
 
@@ -109,8 +122,8 @@ float PopulationManagement() {
 int phSensor[2] = {SensorsOut.PhSensor, Sensors.PhSensor}; //x: main power relay pin or number y: ph analog input
 
 void Setup_pH_Sensor() {
-  int storedoffset = eeGetInt(1);
-  int storedfact = eeGetInt(2);
+  double storedoffset = eeGetInt(1);
+  double storedfact = eeGetInt(2)/1000;
   Serial.print("stored phOffset = ");
   Serial.print(storedoffset);
   Serial.print("stored phFact = ");
@@ -131,8 +144,8 @@ void Calibrate_pH_sensor() {
   if (Ph_Sensor_Variables.calibrate_7 != 0) {
     if (Ph_Sensor_Variables.calibrate_4 != 0) {
       if (Ph_Sensor_Variables.calibrate_10 != 0) {
-        float fact = 3 / (Ph_Sensor_Variables.calibrate_10 - Ph_Sensor_Variables.calibrate_7);
-        float offset = 7 - fact * Ph_Sensor_Variables.calibrate_7;
+        double fact = 3 / (Ph_Sensor_Variables.calibrate_10 - Ph_Sensor_Variables.calibrate_7);
+        double offset = 7 - fact * Ph_Sensor_Variables.calibrate_7;
 
         Serial.print("imprecision at 10 : ");
         Serial.print( Ph_Sensor_Variables.calibrate_10 * fact + offset);
@@ -150,7 +163,7 @@ void Calibrate_pH_sensor() {
         Serial.print("Calibration.phfactor = ");
         Serial.println(Calibration.phFactor);
         eeWriteInt(1, Calibration.phOffset);
-        eeWriteInt(2, Calibration.phFactor);
+        eeWriteInt(2, Calibration.phFactor*1000);
       }
       else {
         Serial.println("please calibrate at ph 10");
@@ -164,6 +177,10 @@ void Calibrate_pH_sensor() {
 }
 
 void Set_pH_Calibrate_7() {
+  if (!FeatureAvailable.PhRead) {
+    Serial.println("phread unavaillable");
+    return;
+  }
   Aeration_off();
   delay(1000);
   Ph_Sensor_Variables.calibrate_7 = sensorRead(phSensor);
@@ -174,6 +191,10 @@ void Set_pH_Calibrate_7() {
 }
 
 void Set_pH_Calibrate_10() {
+  if (!FeatureAvailable.PhRead) {
+    Serial.println("phread unavaillable");
+    return;
+  }
   Aeration_off();
   delay(1000);
   Ph_Sensor_Variables.calibrate_10 = sensorRead(phSensor);
@@ -184,6 +205,10 @@ void Set_pH_Calibrate_10() {
 }
 
 void Set_pH_Calibrate_4() {
+  if (!FeatureAvailable.PhRead) {
+    Serial.println("phread unavaillable");
+    return;
+  }
   Aeration_off();
   delay(1000);
   Ph_Sensor_Variables.calibrate_4 = sensorRead(phSensor);
@@ -194,11 +219,15 @@ void Set_pH_Calibrate_4() {
 }
 
 float ph_sens() {
+  if (!FeatureAvailable.PhRead) {
+    Serial.println("phread unavaillable");
+    return -1;
+  }
   Aeration_off();
-  float ph;
-  float phCalFact = Calibration.phFactor;        //-776.833333333
-  float phCalOffset = Calibration.phOffset;                   //-4.84617034971
-  float phread;
+  double ph;
+  double phCalFact = Calibration.phFactor;        //-776.833333333
+  double phCalOffset = Calibration.phOffset;                   //-4.84617034971
+  double phread;
 
   delay(4000);        //todo : replace delay with timestamps
   phread = sensorRead(phSensor);
@@ -219,10 +248,10 @@ float ph_sens() {
   Serial.println(ph);
 
   Aeration_on();
-  if (ph>0){
-      return ph;
-  }else 
-  return -1;
+  if (ph > 0) {
+    return ph;
+  } else
+    return -1;
 
 }
 
@@ -230,17 +259,15 @@ float ph_sens() {
 
 
 ///////////////// thermometers input ////////////
-
-int tempCalFact = 1;
-int tempCalOffset = 0 ;
 int numberOfDevices;
-#define ONE_WIRE_BUS 14          //x: the pin for thermometer read
+
+#define ONE_WIRE_BUS Sensors.Thermometer          //x: the pin for thermometer read
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 DeviceAddress tempDeviceAddress;
 
-
 void setup_thermometer() {
+
   sensors.begin();
   numberOfDevices = sensors.getDeviceCount();
   // locate devices on the bus
@@ -270,9 +297,18 @@ void setup_thermometer() {
 }
 
 float temperature_sens() {  // todo : add a power up and reset of ds18b20
+  
   float temp;
   sensors.requestTemperatures();
-  // oneWire.reset();
-  temp = sensors.getTempC(tempDeviceAddress) * tempCalFact + tempCalOffset;
+  temp = sensors.getTempC(tempDeviceAddress); // this sensor should not need calibration
+  Serial.print("temperature sensed is : ");
+  Serial.println(temp);
+  if (temp == -127){
+    setup_thermometer();
+  }
+  Serial.print("temperature sensed is : ");
+  Serial.println(temp);
+  Serial.print("versus last tmep : ");
+  Serial.println(LastValue.TempRead);
   return temp;
 }
