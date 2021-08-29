@@ -1,6 +1,8 @@
 // Variable to store the HTTP request
 String header;
 
+//todo : replace the format to use the one from this page https://randomnerdtutorials.com/esp32-esp8266-input-data-html-form/
+
 // Current time
 unsigned long currentTime = millis();
 // Previous time
@@ -41,6 +43,7 @@ void UI_loop() {
 
 
             // buttons
+            bool buttonpressed = true;
             if (header.indexOf("GET /Aeration") >= 0) {
               FeatureAvailable.Aeration = !FeatureAvailable.Aeration;
               if (FeatureAvailable.Aeration) {
@@ -87,6 +90,8 @@ void UI_loop() {
               Set_pH_Calibrate_4();
             } else if (header.indexOf("GET /CalpH10") >= 0) {
               Set_pH_Calibrate_10();
+            }else {
+              buttonpressed=false;
             }
 
             //todo add button for extraction density set 
@@ -121,6 +126,9 @@ void UI_loop() {
             // todo : add condition to display all these buttons to return to the root address
             // Display current Button 1 states (text above the button)
             // lights button
+
+            if (!buttonpressed){
+              
             client.println("<p>Lights are " + String(FeatureAvailable.Lighting) + "</p>");
             client.println("<p><a href=\"/Lighting\"><button class=\"button\">Toggle</button></a></p>");
 
@@ -156,6 +164,16 @@ void UI_loop() {
             //pHcalibration buttons 10
             client.println("<p>pH 7 read value is 10 " + String(Ph_Sensor_Variables.calibrate_10) + "</p>");
             client.println("<p><a href=\"/CalpH10\"><button class=\"button\">Toggle</button></a></p>");
+
+
+// adding entry
+//            client.println("<form action=\"/get\">input1: <input type=\"text\" name=\"input1\"><input type=\"submit\" value=\"Submit\"></form>"); 
+            
+            
+            }else{
+              client.println("<p>action processed</p>");
+              client.println("<p><a href=\"/\"><button class=\"button\">OK</button></a></p>");
+            }
 
 
             client.println("</body></html>");

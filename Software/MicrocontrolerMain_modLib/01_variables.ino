@@ -71,12 +71,12 @@ typedef struct{
 } Limits;
 
 Limits Temps = {
-  31, //  Temps.DayMax
-  30, //  Temps.DayMin
-  27, //  Temps.NightMax
-  26, //  Temps.NightMin
-  31, //  Temps.MaxTreshold
-  30  //  Temps.MinTreshold
+  27, //  Temps.DayMax
+  26, //  Temps.DayMin
+  22, //  Temps.NightMax
+  21, //  Temps.NightMin
+  27, //  Temps.MaxTreshold
+  26  //  Temps.MinTreshold
 };
 
 typedef struct{
@@ -90,7 +90,7 @@ typedef struct{
 Things Variables = {
   12000,  //  Variables.WaterLevelTreshold 11197.00 = in water 14296 = ot in water
   0,      //  Variables.WaterLevel
-  2000,      //  Variables.DensityHighTreshold
+  22000,  //  Variables.DensityHighTreshold if density lower than this, extracton
   0,      //  Variables.DensityLowTreshold
   0       //  Variables.Density
 };
@@ -130,11 +130,11 @@ typedef struct{
 
 PinOut Relays = {
   0,  // Lights;        110v  AC
-  1,  // Heat;          110v  AC
+  8,  // Heat;          110v  AC
   12, // WaterPump;     12v   DC
   22, //--- WaterWheel;    5v    DC  // using 22 for null value
   4,  // AirPump;       12v   DC
-  11, // ExtractionPump 12v   DC
+  5, // ExtractionPump 12v   DC
   13, // NutrientPump   12v   DC
   22, // ---Fan            12v   DC
   22,  // ---density sensor 5v    DC
@@ -202,7 +202,7 @@ Feature FeatureEnable = {
 
 Feature FeatureAvailable = {
   true,
-  true,
+  false,
   false,
   true,
   true,

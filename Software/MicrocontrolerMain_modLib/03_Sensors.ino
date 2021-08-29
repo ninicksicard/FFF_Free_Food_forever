@@ -98,7 +98,7 @@ float PopulationManagement() {
 
   // todo : remove activation from here and put seperately in controls.  --->
   // todo : add system state for extraction
-  if (Variables.Density > Variables.DensityHighTreshold) {
+  if (Variables.Density < Variables.DensityHighTreshold) {
     extraction_on();
   } else {
     extraction_off();
