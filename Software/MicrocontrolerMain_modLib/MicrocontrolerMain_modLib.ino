@@ -73,7 +73,7 @@ void setup() {
 void loop() {
   /*  trigger the routine function. 
    *  it is a function located at the end of the code to make sure 
-   *  all the tasks are designed before it
+   *  all the tasks are designated before it
    */
   routine();
 }

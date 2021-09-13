@@ -4,8 +4,8 @@
  */
 
 
-int morningtime = 6;
-int noontime = 20;
+int morningtime = 7;
+int noontime = 19;
 char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 int preReadDelay = 400; //ms before reading analog input to ensure stabilised sensor voltage
 
@@ -17,6 +17,8 @@ typedef struct {
   int PhRead;
   int TimeCheck;
   int Global;
+  int Aeration_on;
+  int Aeration_off;
 }CycleDurations;
 
 // en secondes
@@ -27,7 +29,9 @@ CycleDurations GraphUpdates = {
   20,   //   GraphUpdates.PopulationRead
   120,    //   GraphUpdates.PhRead   
   50,    //   GraphUpdates.TimeCheck
-  10      //   GraphUpdates.Global
+  10,      //   GraphUpdates.Global
+  10,
+  10*60*1000
 };
 
 CycleDurations ControlCycles = {
@@ -37,24 +41,28 @@ CycleDurations ControlCycles = {
   20,    //   ControlCycles.PopulationRead;
   120,    //   ControlCycles.PhRead;
   50,    //   ControlCycles.TimeCheck;
-  10      //   ControlCycles.Global
+  10,      //   ControlCycles.Global
+  10,
+  10
 };
 
 CycleDurations Timestamps = {
-  millis(),   //Timestamps.TempRead
-  millis(),   //Timestamps.LightRead
-  millis(),   //Timestamps.WaterLevel
-  millis(),   //Timestamps.PopulationRead
-  millis(),   //Timestamps.PhRead
-  millis(),   //Timestamps.TimeCheck
-  millis()    //Timestamps.Global
+  0,   //Timestamps.TempRead
+  0,   //Timestamps.LightRead
+  0,   //Timestamps.WaterLevel
+  0,   //Timestamps.PopulationRead
+  0,   //Timestamps.PhRead
+  0,   //Timestamps.TimeCheck
+  0,    //Timestamps.Global
+  0,
+  -10*60*1000
 };
 
 CycleDurations LastValue = {
   0, 
   0,
   0,
-  0,
+  0,//LastValue.PopulationRead
   0,
   0,
   0
@@ -71,12 +79,12 @@ typedef struct{
 } Limits;
 
 Limits Temps = {
-  27, //  Temps.DayMax
-  26, //  Temps.DayMin
-  22, //  Temps.NightMax
-  21, //  Temps.NightMin
-  27, //  Temps.MaxTreshold
-  26  //  Temps.MinTreshold
+  36, //  Temps.DayMax
+  35, //  Temps.DayMin
+  33, //  Temps.NightMax
+  32, //  Temps.NightMin
+  36, //  Temps.MaxTreshold
+  35  //  Temps.MinTreshold
 };
 
 typedef struct{
@@ -90,8 +98,8 @@ typedef struct{
 Things Variables = {
   12000,  //  Variables.WaterLevelTreshold 11197.00 = in water 14296 = ot in water
   0,      //  Variables.WaterLevel
-  22000,  //  Variables.DensityHighTreshold if density lower than this, extracton
-  0,      //  Variables.DensityLowTreshold
+  26500,  //  Variables.DensityHighTreshold if density lower than this, extracton
+  26600,      //  Variables.DensityLowTreshold
   0       //  Variables.Density
 };
 
@@ -188,16 +196,18 @@ typedef struct{
   bool DensityRead;
   bool Heating;
   bool Lighting;
+  bool extraction;
 }Feature;
 
 Feature FeatureEnable = {
   true,
-  true,
+  false,
   false,
   true,
   true,
   true,
-  true
+  true,
+  true,
 };
 
 Feature FeatureAvailable = {
@@ -207,7 +217,8 @@ Feature FeatureAvailable = {
   true,
   true,
   true,
-  true
+  true,
+  false
 };
 
 typedef struct{
@@ -249,3 +260,23 @@ PhSensorVariables Ph_Sensor_Variables = {
   0,
   -1
 };
+
+
+//void SaveVariables(){
+//  eeWriteInt(3, val);
+//  eeWriteInt(3, val);
+//  eeWriteInt(3, val);
+//  eeWriteInt(3, val);
+//  eeWriteInt(3, val);
+//
+//}
+//
+//void LoadVariables(){
+//  = eeGetInt(3)
+//  = eeGetInt(3)
+//  = eeGetInt(3)
+//  = eeGetInt(3)
+//  = eeGetInt(3)
+//  = eeGetInt(3)
+//  
+//}

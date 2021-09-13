@@ -55,7 +55,7 @@ int main_Level_Sensor[2] = {22, Sensors.WaterLevelSensor}; // x: sensor power pi
 
 float mainTankLevel() {//todo : add system state for water level to avoid the consecutive reads. 
   //todo : remove return and use global variables
-  if (!FeatureAvailable.DensityRead) {
+  if (!FeatureAvailable.WaterLevel || !FeatureEnable.WaterLevel) {
     Serial.println("WaterLevel unavaillable");
 
     return -1;
@@ -83,7 +83,7 @@ int densityPhotoresistor[2] = {22, Sensors.DensitySensor};
 // todo : add set density treshold memory write that works with the button
 
 float PopulationManagement() {
-  if (!FeatureAvailable.DensityRead) {
+  if (!FeatureAvailable.DensityRead || !FeatureEnable.DensityRead) {
     Serial.println("DensityRead unavaillable");
     extraction_off();
     return -1;
@@ -98,8 +98,9 @@ float PopulationManagement() {
 
   // todo : remove activation from here and put seperately in controls.  --->
   // todo : add system state for extraction
-  if (Variables.Density < Variables.DensityHighTreshold) {
+  if (Variables.Density <= Variables.DensityHighTreshold) {
     extraction_on();
+    
   } else {
     extraction_off();
   }

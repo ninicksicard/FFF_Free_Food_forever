@@ -7,14 +7,17 @@ void UpdateRTC() {
   t.setSecond((int)timeClient.getSeconds());
 }
 
+
 void SyncOnlineTime() {
   timeClient.update();
   UpdateRTC();
 }
 
+
 // not sure why it needs to be as variables.
 bool h12flag;
 bool pmflag;
+
 
 int GetHour() {
   if (WiFi.status() == WL_CONNECTED ) {
@@ -22,21 +25,24 @@ int GetHour() {
   }
   return t.getHour(h12flag, pmflag);
 }
+
+
 int GetMinute() {
   if (WiFi.status() == WL_CONNECTED ) {
     SyncOnlineTime();
-  }
-  
+  }  
   return t.getMinute();
 }
 
+
 bool IsDaytime() {
   int nowhour = GetHour();
-  if (morningtime < nowhour && nowhour < noontime) {
+  if (morningtime <= nowhour && nowhour < noontime) {
     return true;
   }
   return false;
 }
+
 
 void TimeProfileManagement() {
   int nowhour = GetHour();
@@ -50,7 +56,7 @@ void TimeProfileManagement() {
       FeatureEnable.PhRead = true;
       SystemStates.NightTime = false;
     }
-    Aeration_on();
+    //Aeration_on();
     //Lights on
     if (!SystemStates.Lights) {
       lightSwitch_on();
@@ -63,14 +69,12 @@ void TimeProfileManagement() {
       Serial.println("DayTime temperatures");
 
     }
-  }
-  //SetupNight time profile
-
-  else {
+  } else {
+   //SetupNight time profile
     Serial.println("night time");
     GraphUpdates.PhRead = 3600; // duration in seconds
     if (!SystemStates.NightTime) {
-      Aeration_off();
+      //Aeration_off();
       FeatureEnable.Aeration = false;
       FeatureEnable.DensityRead = false;
       FeatureEnable.WaterLevel = false;
@@ -88,7 +92,6 @@ void TimeProfileManagement() {
       Temps.MinTreshold = Temps.NightMin;
       Temps.MaxTreshold = Temps.NightMax;
       Serial.println("NightTime temperatures");
-
     }
   }
 }

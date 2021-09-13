@@ -1,3 +1,7 @@
+// todo : new hotpspot if no wifi
+// + add a connection setting in the UI
+// + find how the esp8266 memorises wifis
+
 void TemperatureCycleManagement() {
   int nowhour = GetHour();
   if (morningtime < nowhour && nowhour < noontime) {

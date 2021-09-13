@@ -59,6 +59,8 @@ void UI_loop() {
               FeatureAvailable.WaterLevel = !FeatureAvailable.WaterLevel;
             } else if (header.indexOf("GET /DensityRead") >= 0) {
               FeatureAvailable.DensityRead = !FeatureAvailable.DensityRead;
+            } else if (header.indexOf("GET /extraction") >= 0) {
+              FeatureAvailable.extraction = !FeatureAvailable.extraction;
             } else if (header.indexOf("GET /Heating") >= 0) {
               if (FeatureAvailable.Heating) {
                 FeatureAvailable.Heating = false;
@@ -90,7 +92,15 @@ void UI_loop() {
               Set_pH_Calibrate_4();
             } else if (header.indexOf("GET /CalpH10") >= 0) {
               Set_pH_Calibrate_10();
-            }else {
+            } else if (header.indexOf("GET /SetExtraction_on") >= 0) {
+              SetExtraction_on();
+            } else if (header.indexOf("GET /SetExtraction_off") >= 0) {
+              SetExtraction_off();
+            }
+            
+            
+            
+            else {
               buttonpressed=false;
             }
 
@@ -116,7 +126,7 @@ void UI_loop() {
             // Web Page Heading
             client.println("<body><h1>Spirulina Bioreactor</h1>");
 
-
+            client.println("<p>Time : " + String(GetHour()) + "</p>");
             client.println("<p>Temperature : " + String(LastValue.TempRead) + "</p>");
             client.println("<p>pH :  " + String(LastValue.PhRead) + "</p>");
             client.println("<p>Water Level : " + String(LastValue.WaterLevel) + "</p>");
@@ -153,17 +163,29 @@ void UI_loop() {
             client.println("<p>WaterLevel sensor is " + String(FeatureAvailable.WaterLevel) + "</p>");
             client.println("<p><a href=\"/WaterLevel\"><button class=\"button\">Toggle</button></a></p>");
 
+            // extraction button
+            client.println("<p>extraction sensor is " + String(FeatureAvailable.extraction) + "</p>");
+            client.println("<p><a href=\"/extraction\"><button class=\"button\">Toggle</button></a></p>");
+
+
 
 
             //pHcalibration buttons 7
             client.println("<p> pH 7 read value is " + String(Ph_Sensor_Variables.calibrate_7) + "</p>");
-            client.println("<p><a href=\"/CalpH7\"><button class=\"button\">Toggle</button></a></p>");
+            client.println("<p><a href=\"/CalpH7\"><button class=\"button\">Calibrate</button></a></p>");
             //pHcalibration buttons 4
             client.println("<p>pH 4 read value is " + String(Ph_Sensor_Variables.calibrate_4) + "</p>");
-            client.println("<p><a href=\"/CalpH4\"><button class=\"button\">Toggle</button></a></p>");
+            client.println("<p><a href=\"/CalpH4\"><button class=\"button\">Calibrate</button></a></p>");
             //pHcalibration buttons 10
             client.println("<p>pH 7 read value is 10 " + String(Ph_Sensor_Variables.calibrate_10) + "</p>");
-            client.println("<p><a href=\"/CalpH10\"><button class=\"button\">Toggle</button></a></p>");
+            client.println("<p><a href=\"/CalpH10\"><button class=\"button\">Calibrate</button></a></p>");
+
+            // extraction density on
+            client.println("<p>SetExtraction_on</p>");
+            client.println("<p><a href=\"/SetExtraction_on\"><button class=\"button\">Set</button></a></p>");
+            // extraction density off
+            client.println("<p>SetExtraction_off</p>");
+            client.println("<p><a href=\"/SetExtraction_off\"><button class=\"button\">Set</button></a></p>");
 
 
 // adding entry

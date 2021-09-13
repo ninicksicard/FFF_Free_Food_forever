@@ -19,6 +19,7 @@ void switchRelay(int relay, uint8_t state) {
   }
 }
 
+
 void setup_relays() {
   /* go thrue all pins of te pwm to reset their state
      syncing them with the system's state variables */
@@ -28,17 +29,24 @@ void setup_relays() {
   }
 }
 
+
 /////////////////// Light Switch /////////////////
 
 void lightSwitch_on() {
   /*  Turn Lights on, send a status update via serialprint
       and change the light state in system memory */
+  if (!FeatureAvailable.Lighting) {
+    lightSwitch_off();
+    return;
+  }
+
   if (FeatureEnable.Lighting) {
     switchRelay(Relays.Lights, HIGH);
     Serial.println("light switched on");
     SystemStates.Lights = true;
   }
 }
+
 
 void lightSwitch_off() {
   /*  Turn Lights off, send a status update via serialprint
@@ -56,7 +64,17 @@ void Aeration_on()  {
       it also print a text update and change the pump's
       state in the system memory
   */
-  if (FeatureEnable.Aeration && FeatureAvailable.Aeration) {
+  Timestamps.Aeration_on = millis();
+  Serial.println("Aeration_on void");
+  if (!FeatureAvailable.Aeration) {
+    Serial.println("Aeration feature unavaillable");
+    Aeration_off();
+    return;
+  }
+  Serial.print("FeatureEnable : ");
+  Serial.println(FeatureEnable.Aeration);
+  if (FeatureEnable.Aeration) {
+    Serial.println("FeatureAvaillable Aeration");
     switchRelay(Relays.AirPump, HIGH);
     Serial.println("AirPump On");
     SystemStates.AirPump = true;
@@ -67,6 +85,7 @@ void Aeration_off() {
       it also print a text update and change the pump's
       state in the system memory
   */
+  Timestamps.Aeration_off = millis();
   switchRelay(Relays.AirPump, LOW);
   Serial.println("AirPump off");
   SystemStates.AirPump = false;
@@ -91,7 +110,11 @@ void waterPump_on() {
       it also print a text update and change the pump's
       state in the system memory
   */
-  if (FeatureEnable.WaterLevel && FeatureAvailable.WaterLevel) {
+  if (!FeatureAvailable.WaterLevel) {
+    waterPump_off();
+    return;
+  }
+  if (FeatureEnable.WaterLevel) {
     switchRelay(Relays.WaterPump, HIGH);
     Serial.println("water Pump turned on");
     SystemStates.WaterPump = true;
@@ -152,6 +175,13 @@ void extraction_on() { // extraction time is in seconds
   /*  this code switch the extraction pump on,
       it also print a text update and change the pump's
       state in the system memory */
+
+  if (!FeatureAvailable.extraction) {
+    nutrientPump_off();
+    extraction_off();
+    return;
+  }
+  nutrientPump_on();
   switchRelay(Relays.ExtractionPump, HIGH);
   Serial.println("Extraction pump turned on");
   SystemStates.ExtractionPump = true;
@@ -166,6 +196,14 @@ void extraction_off() {
   SystemStates.ExtractionPump = false;
 }
 
+void SetExtraction_on(){
+  Variables.DensityHighTreshold = LastValue.PopulationRead;
+}
+
+void SetExtraction_off(){
+  Variables.DensityLowTreshold = LastValue.PopulationRead;
+}
+
 // ------------------------------------------Nutrient management ------------------------------------
 /*  solid fertiliser dosing actuator(s)(archimedes screw motor)
     water input pump/valve
@@ -173,10 +211,11 @@ void extraction_off() {
     nutrient output pump/valve
 */
 
-void nutrienPump_on() {
+void nutrientPump_on() {
   /*  this code switch the nutrient pump on,
       it also print a text update and change the pump's
       state in the system memory */
+
   switchRelay(Relays.NutrientPump, HIGH);
   Serial.println("nutrient pump turned on");
   SystemStates.NutrientPump = true;
@@ -207,6 +246,11 @@ void heating_on() {
       it also print a text update and change the pump's
       state in the system memory
   */
+  if (!FeatureAvailable.Heating) {
+    heating_off();
+    return;
+  }
+
   if (FeatureEnable.Heating) {
     if (!SystemStates.Heat) {
       switchRelay(Relays.Heat, HIGH);
