@@ -1,0 +1,5 @@
+Instance of the following were suppressed or opened from new location when this file was opened
+
+File	Reason	
+C:\Users\Nicolas Sicard\AppData\Local\Temp\swx11948\VC~~\Bioreactor\Sensor Module.SLDPRT	Unable to locate the file
+
