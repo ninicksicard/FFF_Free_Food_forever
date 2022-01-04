@@ -40,7 +40,7 @@ To make your own :
 ![first inoculation](https://user-images.githubusercontent.com/31396919/129781104-c5b652c7-1b42-450f-9738-b74689266c46.jpg)
 8. wait until the population is dense enough
 ![100x spirulina microscope(streight strain) (2)](https://user-images.githubusercontent.com/31396919/129780977-62bdf652-d2c9-4431-a54d-6d395bb91a7c.jpg)
-9. consume the extracted spirulina every days or discard of the surplus.
+9. consume the extracted spirulina every days or discard the surplus.
 ![Screenshot_6](https://user-images.githubusercontent.com/31396919/129780104-77a857bd-0825-489c-9797-fe5b80b9681d.png)
 
 
