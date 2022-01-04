@@ -25,7 +25,8 @@ To make your own :
 1. gather all the parts listed in the parts list.
 ![Screenshot_63](https://user-images.githubusercontent.com/31396919/129781252-9c30e99f-d930-4a84-b4f1-55a5ce4405ed.png)
 2. order a pcb on jlcpcb with the Gerber Files for the motherboard
-![Screenshot_3](https://user-images.githubusercontent.com/31396919/129780256-9e9fb157-11d3-4b96-a0c5-9255d6073f26.png)
+![diagram](https://user-images.githubusercontent.com/31396919/148130812-817e9b19-3674-4c81-8325-c18ad91ec25f.png)
+![pcbdiagram](https://user-images.githubusercontent.com/31396919/148130762-5ca8142b-efe2-4f9a-8eaf-f2ca4125e744.png)
 ![PCB](https://user-images.githubusercontent.com/31396919/148130620-feeb4051-906a-4069-8347-3ff89a87000d.png)
 3. order a spirulina starter kit or get some live culture from a friend. 
 ![sample backup](https://user-images.githubusercontent.com/31396919/129780426-0c963dd7-1a12-40ee-8fbf-f63e726519fa.jpg)
