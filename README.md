@@ -11,7 +11,7 @@ Spirulina is nutritive, cheap and easy to grow. Making a spirulina bioreactor co
 
 Current status : 
 working prototype with some manual input. 
-Total cost is less than 300$ and can be lowered.
+Total cost is less than 220$ and can be lowered.
 working cost is pretty low : 
   less than 7$/month of electricity
   cost of growth medium is uncertain now. seems to be less than 30$/months.
