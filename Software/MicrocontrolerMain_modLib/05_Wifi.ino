@@ -28,7 +28,7 @@ void setup_wifi() {
   server.begin();
   Serial.println("server began");
 
-  WiFi.begin("Sylvie", "Bertrande");
+  WiFi.begin("WIFI_NAME", "Bertrande");
   Serial.println("Wifi Began");
   int i = 0;
   while (WiFi.status() != WL_CONNECTED and i < 20) {
