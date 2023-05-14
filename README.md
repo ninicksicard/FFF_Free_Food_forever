@@ -67,3 +67,57 @@ As stated, it is definetly not a perfect or proper food source, but it is way be
 
 Taste 
 When rinsed properly, fresh and mixed with water, it feels and taste like drinking water. 
+
+
+
+
+
+
+
+
+
+
+# DIY Spirulina Bioreactor
+
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Contribution Guidelines](#contribution)
+6. [Troubleshooting](#troubleshooting)
+7. [License](#license)
+8. [Acknowledgements](#acknowledgements)
+
+## Introduction <a name="introduction"></a>
+Welcome to the DIY Spirulina Bioreactor project. Spirulina is a nutrient-rich, easy-to-grow microalgae that serves as an excellent food source. Our project aims to tackle world hunger by providing a cost-effective solution: a DIY Spirulina Bioreactor. This bioreactor automates the process of Spirulina cultivation, offering a sustainable food production method with minimal resource requirements.
+
+## Features <a name="features"></a>
+The Spirulina Bioreactor boasts several features:
+- Efficient and cheap Spirulina cultivation
+- Automated process requiring minimal manual intervention
+- Low total and operational costs
+- Utilization of sustainable and accessible resources
+
+## Installation <a name="installation"></a>
+Setting up your own Spirulina Bioreactor involves a few steps, including gathering necessary parts, ordering a PCB, procuring a Spirulina starter kit, assembling the parts, loading the software on the microcontroller, and preparing the growth medium. Detailed instructions and a list of materials are provided in the [Fabrication Guide](link-to-guide-here) PDF.
+
+## Usage <a name="usage"></a>
+Once the setup is complete, the bioreactor can be used to cultivate Spirulina. Detailed instructions on Spirulina cultivation, maintenance, and extraction are provided in the guide. We also provide information on how to handle the harvested Spirulina.
+
+## Contribution Guidelines <a name="contribution"></a>
+We welcome contributions to improve the project. This could include bug fixes, feature enhancements, or even sharing your experience of building and using the bioreactor. Please make sure to adhere to the project's code of conduct.
+
+## Troubleshooting <a name="troubleshooting"></a>
+We provide a list of common issues encountered during the setup or usage of the bioreactor, along with their respective solutions. If you face a problem not listed there, please raise an issue, and we'll address it promptly.
+
+## License <a name="license"></a>
+This project is licensed under the MIT license.
+
+## Acknowledgements <a name="acknowledgements"></a>
+We would like to thank the open-source community for their continuous support and inspiration that made this project possible.
+
+---
+
+For further questions or clarifications, please contact us at [email@example.com](mailto:email@example.com).
+
