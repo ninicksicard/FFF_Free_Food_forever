@@ -1,0 +1,813 @@
+booting
+activate  wlan
+wlan has been activated
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', 'Joey-Mylene', '', '', '', 'Helix 135-E', '', '', '', 'Marc135', 'alyalexis', '', '', '', 'R\xe9seau Wi-Fi de Vincent', 'SmartLife-DA5D', 'TELUS5FCA', '', '', '', 'Fred', '', '', '', 'TELUS3206', 'Tineco_5916', 'TELUS724B', '', '', '', '', 'Meg', '', 'MmeTabby', '', '', 'Simone', '', '', '', '', 'TheSexHouse', '']
+Attempting to connect to network HELIX-NS...
+ssid : HELIX-NS
+password : B3rtrande!
+.
+.
+.
+.
+.
+Failed to connect to HELIX-NS
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'Helix 135-E', '', '', '', 'alyalexis', '', '', '', 'SmartLife-DA5D', 'R\xe9seau Wi-Fi de Vincent', '', 'TELUS5FCA', '', '', 'Marielle Bisson', '', '', '', '', 'Fred', 'TELUS3206', '', '', 'MmeTabby', '', 'TELUS724B', '', 'Meg', '', 'Simone', '', 'Tineco_5916', 'Sodan', '', '', '', '', 'videotron5561', '', '', 'FIZZ13893', '', '', '', '', 'TheSexHouse', '', 'Vendredi 13', 'TELUS3553']
+Attempting to connect to network HELIX-NS...
+ssid : HELIX-NS
+password : B3rtrande!
+.
+ Successfully connected to HELIX-NS
+ connection parameters : ('10.0.0.206', '255.255.255.0', '10.0.0.1', '24.200.243.189')
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/hvac'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/hvac topic
+connect_client_loop done
+topic :
+b'home/esp32s3/hvac'
+Failed to subscribe to topic home/esp32s3/hvac: -1
+topic :
+b'home/esp32s3/hvac'
+Failed to subscribe to topic home/esp32s3/hvac: [Errno 104] ECONNRESET
+mqtt_send
+booting
+activate  wlan
+wlan already active
+find networks
+['', 'HELIX-NS', '', '', 'Sensass', '', '', '', '', '', '', 'Joey-Mylene', '', 'Helix 135-E', '', '', '', 'alyalexis', '', '', 'Marc135', 'R\xe9seau Wi-Fi de Vincent', 'TELUS5FCA', '', '', 'Marielle Bisson', '', '', '', 'Fred', '', '', 'SmartLife-DA5D', 'TELUS3206', 'Tineco_5916', '', 'MmeTabby', '', '', '', 'Sodan', 'Simone', '', '', '', '', 'TELUS724B', '', 'videotron5561', '', '', '', 'technove_b17176', '', '', 'Vendredi 13', 'TheSexHouse', '', 'Meg', '', '', '', '', '', 'FIZZ13893', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Failed to subscribe to topic home/esp32s3/fff: -1
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Failed to subscribe to topic home/esp32s3/fff: [Errno 104] ECONNRESET
+topic :
+b'home/esp32s3/fff'
+Failed to subscribe to topic home/esp32s3/fff: [Errno 128] ENOTCONN
+mqtt_send
+booting
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', '', 'Joey-Mylene', '', '', 'Helix 135-E', '', '', '', '', 'Marc135', 'alyalexis', '', 'SmartLife-DA5D', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', 'TELUS5FCA', '', '', '', '', 'TELUS3206', 'Tineco_5916', '', 'MmeTabby', '', '', 'Simone', '', '', '', '', 'videotron5561', 'Sodan', '', '', '', '', 'Meg', 'Vendredi 13', 'FIZZ13893', '', '', 'guesswho', '', 'TheSexHouse', '', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+booting
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'alyalexis', '', '', '', 'Helix 135-E', '', '', '', 'Marc135', 'SmartLife-DA5D', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', '', 'TELUS5FCA', '', 'Fred', '', '', 'TELUS3206', 'Tineco_5916', 'TELUS724B', 'MmeTabby', 'videotron5561', '', '', 'Simone', '', '', '', '', '', '', 'Sodan', '', '', 'technove_b17176', 'Vendredi 13', '', 'TheSexHouse', 'AT_202_RV13B6ES_D_US_WIFI_b3eb', 'guesswho', '', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', '', 'Sensass', '', '', 'Joey-Mylene', '', '', '', '', '', '', 'alyalexis', 'SmartLife-DA5D', '', 'Marc135', 'Helix 135-E', '', '', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', 'TELUS5FCA', '', '', '', '', 'Fred', 'TELUS3206', 'MmeTabby', '', '', '', 'Tineco_5916', 'TELUS724B', '', '', '', 'Sodan', '', '', '', '', 'technove_b17176', 'Vendredi 13', '', '', 'FIZZ13893', '', 'AT_202_RV13B6ES_D_US_WIFI_b3eb']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', '', 'Sensass', '', '', 'Joey-Mylene', '', '', '', '', 'alyalexis', 'SmartLife-DA5D', '', '', '', '', 'Helix 135-E', '', '', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', 'TELUS5FCA', 'Fred', '', '', '', '', 'Tineco_5916', 'MmeTabby', '', 'TELUS3206', 'TELUS724B', 'Sodan', 'Simone', '', '', '', '', '', '', '', '', '', '', '', 'videotron5561', '', 'TheSexHouse', '', '', 'mygod', '', '', 'TELUS3553']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+activate  wlan
+wlan already active
+find networks
+['', 'HELIX-NS', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'SmartLife-DA5D', 'alyalexis', 'Helix 135-E', '', '', '', '', '', '', 'Marc135', 'R\xe9seau Wi-Fi de Vincent', '', '', 'Marielle Bisson', '', 'TELUS5FCA', '', 'Fred', '', '', 'TELUS3206', '', 'Tineco_5916', 'MmeTabby', '', '', 'Sodan', '', '', 'technove_b17176', '', 'Simone', '', '', '', '', 'videotron5561', 'Meg', '', 'TELUS724B', '', '', '', '', 'guesswho', '', 'Vendredi 13', '', '', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', '', 'alyalexis', 'Helix 135-E', '', '', '', '', '', '', 'SmartLife-DA5D', 'R\xe9seau Wi-Fi de Vincent', '', '', '', 'Marielle Bisson', '', 'Fred', '', '', 'TELUS5FCA', '', '', '', '', 'MmeTabby', 'TELUS3206', 'TELUS724B', '', '', 'Tineco_5916', '', '', 'Sodan', '', '', '', 'technove_b17176', '', '', '', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+function : <function mqtt_set_state at 0x3d81e650>, args : None, msg : b'True'
+mqtt_set_state received <class 'bytes'> instead. state:b'True', args:()
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'SmartLife-DA5D', '', 'Helix 135-E', '', 'alyalexis', '', '', '', '', 'Marc135', 'R\xe9seau Wi-Fi de Vincent', '', 'Marielle Bisson', '', '', '', 'Fred', '', 'TELUS5FCA', '', '', 'TELUS3206', '', 'TELUS724B', '', '', '', 'MmeTabby', 'Sodan', '', 'Simone', '', 'Tineco_5916', 'videotron5561', '', '', '', '', '', '', '', 'Meg', '', '', 'FIZZ13893', '', 'technove_b17176', 'Vendredi 13', '', '', 'TELUSA03B', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'SmartLife-DA5D', 'alyalexis', '', '', '', '', 'Helix 135-E', '', '', '', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', '', '', '', 'Fred', '', 'TELUS5FCA', 'TELUS3206', 'Tineco_5916', 'Simone', '', '', '', 'TELUS724B', 'Sodan', '', '', '', 'Meg', '', '', '', '', '', '', '', 'guesswho', '', '', '', 'Vendredi 13', '', '', '', '', 'TELUS3553', 'AT_202_RV13B6ES_D_US_WIFI_b3eb']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', '', 'Joey-Mylene', '', '', 'SmartLife-DA5D', 'alyalexis', '', '', '', 'Helix 135-E', '', '', '', 'Marc135', 'R\xe9seau Wi-Fi de Vincent', '', 'Marielle Bisson', '', '', '', '', 'TELUS5FCA', 'Tineco_5916', 'Fred', '', 'TELUS3206', '', '', '', 'MmeTabby', '', '', '', '', '', 'TELUS724B', 'Simone', '', 'Sodan', '', 'technove_b17176', '', '', '', 'guesswho', '', '', '', '', '', 'TELUS3553', 'Vendredi 13', 'AT_202_RV13B6ES_D_US_WIFI_b3eb', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', '', '', '', 'Sensass', '', 'Joey-Mylene', '', '', 'SmartLife-DA5D', '', 'alyalexis', '', '', '', 'Helix 135-E', '', '', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', 'TELUS5FCA', '', '', 'Fred', '', '', '', 'Tineco_5916', '', '', 'TELUS724B', '', '', '', 'MmeTabby', '', 'Sodan', '', '', 'Meg', '', '', '', 'technove_b17176', '', 'guesswho', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'SmartLife-DA5D', '', '', 'alyalexis', '', '', 'Helix 135-E', '', '', '', 'R\xe9seau Wi-Fi de Vincent', '', 'Marielle Bisson', '', '', '', '', '', '', 'Fred', 'Tineco_5916', 'TELUS3206', 'Simone', '', '', 'MmeTabby', '', '', '', '', '', 'TELUS724B', '', 'Sodan', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+mqtt_send
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', 'SmartLife-DA5D', '', 'alyalexis', '', '', '', '', '', '', 'R\xe9seau Wi-Fi de Vincent', '', '', 'Marielle Bisson', '', '', '', '', '', '', '', 'Fred', 'TELUS5FCA', 'Tineco_5916', 'MmeTabby', '', 'TELUS3206', 'TELUS724B', '', '', '', 'Simone', '', 'Sodan', '', '', '', 'Meg', '', '', 'videotron5561', '', '', '', '', 'TheSexHouse', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['', '', 'HELIX-NS', '', '', '', 'Sensass', '', 'Joey-Mylene', '', '', '', 'alyalexis', '', 'SmartLife-DA5D', '', '', 'Marc135', 'Helix 135-E', '', '', '', 'R\xe9seau Wi-Fi de Vincent', '', 'Marielle Bisson', '', '', '', '', '', 'Fred', '', '', '', 'MmeTabby', 'TELUS3206', 'Tineco_5916', '', 'TELUS724B', '', '', '', '', 'Sodan', '', 'Meg', '', '', '', '', '', 'videotron5561', '', '', 'technove_b17176', '', '', '', 'guesswho', '', '', '', 'ORICOM7555']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', '', 'Joey-Mylene', '', '', 'SmartLife-DA5D', 'alyalexis', '', '', '', 'Helix 135-E', '', '', '', 'Marc135', 'R\xe9seau Wi-Fi de Vincent', 'Marielle Bisson', '', '', '', '', '', 'TELUS5FCA', 'Fred', '', '', 'TELUS3206', 'MmeTabby', '', 'TELUS724B', '', 'Tineco_5916', '', '', 'Simone', '', 'videotron5561', '', '', 'Sodan', '', '', '', '', '', '', '', '', '', 'TELUS3553', 'technove_b17176', '', 'ORICOM7555', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+connect_client_loop done
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+topic :
+b'home/esp32s3/fff'
+Connected to 10.0.0.12 MQTT broker, subscribed to home/esp32s3/fff topic
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', '', '', 'alyalexis', '', 'SmartLife-DA5D', 'Marc135', 'Helix 135-E', '', '', '', 'R\xe9seau Wi-Fi de Vincent', '', '', 'MmeTabby', '', 'Marielle Bisson', '', '', '', '', '', '', '', 'Fred', '', 'TELUS3206', '', '', 'Sodan', '', '', '', '', 'TELUS724B', '', 'Tineco_5916', '', 'Meg', 'FIZZ13893', '', '', 'Simone', '', '', '', '', '', 'TELUSA03B', 'guesswho']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+connect_client_loop done
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+check_msg
+check_msg
+mqtt_send : ('ESP32S3_983daee796d4/heartbeat', b'alive')
+check_msg
+check_msg
+check_msg
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['', '', '', 'HELIX-NS', 'Sensass', '', '', '', 'Joey-Mylene', '', '', '', '', 'SmartLife-DA5D', '', 'alyalexis', '', '', 'Helix 135-E', '', '', '', 'R\xe9seau Wi-Fi de Vincent', '', '', 'MmeTabby', '', 'Marielle Bisson', '', '', '', '', 'Fred', '', 'TELUS724B', '', '', 'videotron5561', '', 'TELUS3206', 'Tineco_5916', '', '', '', 'Sodan', '', 'Meg', '', '', '', '', '', '', '', '', '', 'Vendredi 13', 'technove_b17176', '', 'guesswho']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+connect_client_loop done
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan has been activated
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', 'Joey-Mylene', '', 'Helix 135-E', '', '', '', 'Marc135', 'alyalexis', '', '', '', 'SmartLife-DA5D', 'Marielle Bisson', '', '', '', '', '', '', 'MmeTabby', '', '', '', 'Tineco_5916', '', '', '', '', '', 'Sodan']
+Attempting to connect to network HELIX-NS...
+ssid : HELIX-NS
+password : B3rtrande!
+.
+.
+.
+.
+ Successfully connected to HELIX-NS
+ connection parameters : ('10.0.0.206', '255.255.255.0', '10.0.0.1', '24.200.243.189')
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+connect_client_loop done
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/MQTT_TOPICS_stepper_move_to topic
+topic :
+b'fff/valve_1'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_1 topic
+topic :
+b'fff/valve_0'
+Connected to 10.0.0.12 MQTT broker, subscribed to fff/valve_0 topic
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan has been activated
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', '', '', 'Joey-Mylene', 'alyalexis', '', '', '', 'Helix 135-E', '', '', '', 'SmartLife-DA5D', 'Marielle Bisson', '', 'R\xe9seau Wi-Fi de Vincent', '', 'MmeTabby', '', '', '', 'Fred', '', '', '', '', 'technove_b17176', '', '', '', '', 'Sodan', 'Tineco_5916', '', '', '', 'Vendredi 13', '', '', '', '', 'Meg']
+Attempting to connect to network HELIX-NS...
+ssid : HELIX-NS
+password : B3rtrande!
+.
+.
+.
+booting
+self.CLIENT_ID = ESP32S3_983daee796d4
+activate  wlan
+wlan already active
+find networks
+['HELIX-NS', '', '', '', 'Sensass', '', '', '', '', 'Joey-Mylene', '', '', '', 'alyalexis', '', '', 'Helix 135-E', '', '', '', 'SmartLife-DA5D', 'Marielle Bisson', '', '', '', 'R\xe9seau Wi-Fi de Vincent', '', 'MmeTabby', '', '', '', 'Fred', '', '', '', '', '', 'technove_b17176', '', '', '', 'guesswho', '', '', '', '', '', 'Sodan', '', '', 'Vendredi 13', '', 'Tineco_5916', '', '']
+already connected to prefered network HELIX-NS
+connectMQTT
+starting connection loop thread from connect_mqtt
+connect_client_loop
+connect_client
+connection successful
+topic :
+b'fff/MQTT_TOPICS_stepper_move_to'
