@@ -1,0 +1,6 @@
+{
+    "MQTT_BROKER": "mqtt.example.com",
+    "MQTT_CLIENT_ID": "ESP32S3_example",
+    "MQTT_USERNAME": "homeassistant",
+    "MQTT_PASSWORD": "YOUR_MQTT_PASSWORD"
+}

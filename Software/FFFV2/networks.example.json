@@ -1,18 +1,14 @@
 {
     "schema": 2,
     "known_networks": [
-        {
-            "ssid": "HELIX-NS",
-            "password": "B3rtrande!",
-            "enables_webrepl": false
-        }
+        { "ssid": "YOUR_WIFI_SSID", "password": "YOUR_WIFI_PASSWORD", "enables_webrepl": false }
     ],
     "access_point": {
         "config": {
             "essid": "Micropython-Dev2",
             "channel": 11,
             "hidden": false,
-            "password": "Pa55W0rd"
+            "password": "CHANGE_ME"
         },
         "enables_webrepl": false,
         "start_policy": "fallback"
