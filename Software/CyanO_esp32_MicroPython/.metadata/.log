@@ -1,0 +1,161 @@
+!SESSION 2023-05-16 16:41:37.418 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=11.0.17
+java.vendor=Amazon.com Inc.
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_CA
+Command-line arguments:  -data G:\My Drive\Projects\FFF_Free_Food_forever\Software\CyanO_esp32_MicroPython -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.ui 2 0 2023-05-16 16:41:41.858
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2023-05-16 16:41:41.858
+!MESSAGE Commands should really have a category: plug-in='com.espressif.idf.ui', id='com.espressif.commands.cleanCommand', categoryId='com.espressif.commands.category'
+!SUBENTRY 1 org.eclipse.ui 2 0 2023-05-16 16:41:41.858
+!MESSAGE Commands should really have a category: plug-in='com.espressif.idf.ui', id='com.espressif.commands.fullcleanCommand', categoryId='com.espressif.commands.category'
+!SUBENTRY 1 org.eclipse.ui 2 0 2023-05-16 16:41:41.858
+!MESSAGE Commands should really have a category: plug-in='com.espressif.idf.ui', id='com.espressif.commands.pythoncleanCommand', categoryId='com.espressif.commands.category'
+
+!ENTRY org.eclipse.ui 2 0 2023-05-16 16:41:42.728
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2023-05-16 16:41:42.728
+!MESSAGE Commands should really have a category: plug-in='com.espressif.idf.ui', id='com.espressif.commands.cleanCommand', categoryId='com.espressif.commands.category'
+!SUBENTRY 1 org.eclipse.ui 2 0 2023-05-16 16:41:42.728
+!MESSAGE Commands should really have a category: plug-in='com.espressif.idf.ui', id='com.espressif.commands.fullcleanCommand', categoryId='com.espressif.commands.category'
+!SUBENTRY 1 org.eclipse.ui 2 0 2023-05-16 16:41:42.728
+!MESSAGE Commands should really have a category: plug-in='com.espressif.idf.ui', id='com.espressif.commands.pythoncleanCommand', categoryId='com.espressif.commands.category'
+
+!ENTRY org.eclipse.launchbar.core 2 0 2023-05-16 16:41:50.318
+!MESSAGE Enablement expression is missing for descriptor type com.espressif.idf.debug.gdbjtag.openocd.descriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2023-05-16 16:41:50.334
+!MESSAGE Enablement expression is missing for config provider for com.espressif.idf.debug.gdbjtag.openocd.descriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2023-05-16 16:41:50.344
+!MESSAGE Enablement expression is missing for config provider for com.espressif.idf.launch.serial.core.idf.descriptorType
+
+!ENTRY org.eclipse.launchbar.core 2 0 2023-05-16 16:41:50.353
+!MESSAGE Enablement expression is missing for descriptor type com.espressif.idf.launch.serial.core.idf.descriptorType
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:50.407
+!MESSAGE Eclipse Install location::file:/C:/Espressif/tools/espressif-ide/2.7.0/
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:50.442
+!MESSAGE Updating environment variables with key:IDF_PATH value:C:/Espressif/frameworks/esp-idf-v5.0/
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:50.568
+!MESSAGE Executing C:/Espressif/python_env/idf5.0_py3.8_env/Scripts/python.exe C:\Espressif\frameworks\esp-idf-v5.0\tools\idf_tools.py export --format=key-value
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.211
+!MESSAGE Not using an unsupported version of tool xtensa-esp32-elf found in PATH: esp-2021r2-patch3-8.4.0. To use it, run 'C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v5.0\tools\idf_tools.py export --prefer-system'
+OPENOCD_SCRIPTS=C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\share\openocd\scripts
+IDF_CCACHE_ENABLE=1
+IDF_PYTHON_ENV_PATH=C:\Espressif\python_env\idf5.0_py3.8_env
+ESP_IDF_VERSION=5.0
+PATH=C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.218
+!MESSAGE Key: OPENOCD_SCRIPTS Value: C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\share\openocd\scripts
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.224
+!MESSAGE Updating environment variables with key:OPENOCD_SCRIPTS value:C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\share\openocd\scripts
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.273
+!MESSAGE Key: IDF_CCACHE_ENABLE Value: 1
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.279
+!MESSAGE Updating environment variables with key:IDF_CCACHE_ENABLE value:1
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.326
+!MESSAGE Key: IDF_PYTHON_ENV_PATH Value: C:\Espressif\python_env\idf5.0_py3.8_env
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.331
+!MESSAGE Updating environment variables with key:IDF_PYTHON_ENV_PATH value:C:\Espressif\python_env\idf5.0_py3.8_env
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.378
+!MESSAGE Key: ESP_IDF_VERSION Value: 5.0
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.384
+!MESSAGE Updating environment variables with key:ESP_IDF_VERSION value:5.0
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.463
+!MESSAGE Key: PATH Value: C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.470
+!MESSAGE Updating environment variables with key:PATH value:C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Python311\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python311\Scripts\;C:\PROGRA~1\PTC\UTILIT~1\MKSTOO~1\bin64;C:\PROGRA~1\PTC\UTILIT~1\MKSTOO~1\bin;C:\PROGRA~1\PTC\UTILIT~1\MKSTOO~1\bin\X11;C:\PROGRA~1\PTC\UTILIT~1\MKSTOO~1\mksnt;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin\;C:\Program Files\IVI Foundation\VISA\Win64\Bin\;C:\Program Files (x86)\National Instruments\Shared\LabVIEW CLI;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files\MATLAB\MATLAB Runtime\R2022b\runtime\win64;C:\MicrosoftVSCode\bin;C:\Program Files\PuTTY\;C:\ATMEL\MPLAB_XC_Compiler\bin;C:\msys32\mingw32\bin\;C:\Program Files\Process Lasso\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Polyspace\R2021a\bin;C:\Program Files\Git\cmd;C:\Users\Nicolas_Sicard\.cargo\bin;C:\Users\Nicolas_Sicard\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\Nicolas_Sicard\AppData\Local\Programs\Python\Python310\;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;%PyCharm Community Edition%;C:\Users\Nicolas_Sicard\AppData\Local\GitHubDesktop\bin;C:\Espressif\tools\xtensa-esp32-elf-clang\esp-14.0.0-20220415-x86_64-pc-windows-msvc\bin\;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.33.31629\bin\Hostx64\x64;;C:\Espressif\tools\idf-git\2.34.2\cmd
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.631
+!MESSAGE Initializing toolchain...
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.638
+!MESSAGE idf_tools.py path: C:/Espressif/frameworks/esp-idf-v5.0//tools/idf_tools.py
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:52.646
+!MESSAGE [C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe, C:/Espressif/frameworks/esp-idf-v5.0//tools/idf_tools.py, export, --format=key-value]
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:53.658
+!MESSAGE idf_tools.py export output: Not using an unsupported version of tool xtensa-esp32-elf found in PATH: esp-2021r2-patch3-8.4.0. To use it, run 'C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v5.0\\tools\idf_tools.py export --prefer-system'
+OPENOCD_SCRIPTS=C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\share\openocd\scripts
+IDF_CCACHE_ENABLE=1
+IDF_PYTHON_ENV_PATH=C:\Espressif\python_env\idf5.0_py3.8_env
+ESP_IDF_VERSION=5.0
+PATH=C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:53.663
+!MESSAGE PATH: C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:53.669
+!MESSAGE [C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%]
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:53.865
+!MESSAGE Initializing toolchain...
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:53.872
+!MESSAGE idf_tools.py path: C:/Espressif/frameworks/esp-idf-v5.0//tools/idf_tools.py
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:53.883
+!MESSAGE [C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe, C:/Espressif/frameworks/esp-idf-v5.0//tools/idf_tools.py, export, --format=key-value]
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:55.055
+!MESSAGE idf_tools.py export output: Not using an unsupported version of tool xtensa-esp32-elf found in PATH: esp-2021r2-patch3-8.4.0. To use it, run 'C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe C:\Espressif\frameworks\esp-idf-v5.0\\tools\idf_tools.py export --prefer-system'
+OPENOCD_SCRIPTS=C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\share\openocd\scripts
+IDF_CCACHE_ENABLE=1
+IDF_PYTHON_ENV_PATH=C:\Espressif\python_env\idf5.0_py3.8_env
+ESP_IDF_VERSION=5.0
+PATH=C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:55.062
+!MESSAGE PATH: C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%
+
+!ENTRY com.espressif.idf.core 1 0 2023-05-16 16:41:55.067
+!MESSAGE [C:\Espressif\tools\xtensa-esp-elf-gdb\11.2_20220823\xtensa-esp-elf-gdb\bin;C:\Espressif\tools\riscv32-esp-elf-gdb\11.2_20220823\riscv32-esp-elf-gdb\bin;C:\Espressif\tools\xtensa-esp32-elf\esp-2022r1-11.2.0\xtensa-esp32-elf\bin;C:\Espressif\tools\xtensa-esp32s2-elf\esp-2022r1-11.2.0\xtensa-esp32s2-elf\bin;C:\Espressif\tools\xtensa-esp32s3-elf\esp-2022r1-11.2.0\xtensa-esp32s3-elf\bin;C:\Espressif\tools\riscv32-esp-elf\esp-2022r1-11.2.0\riscv32-esp-elf\bin;C:\Espressif\tools\esp32ulp-elf\2.35_20220830\esp32ulp-elf\bin;C:\Espressif\tools\cmake\3.24.0\bin;C:\Espressif\tools\openocd-esp32\v0.11.0-esp32-20221026\openocd-esp32\bin;C:\Espressif\tools\ninja\1.10.2\;C:\Espressif\tools\idf-exe\1.0.3\;C:\Espressif\tools\ccache\4.6.2\ccache-4.6.2-windows-x86_64;C:\Espressif\tools\dfu-util\0.9\dfu-util-0.9-win64;C:\Espressif\python_env\idf5.0_py3.8_env\Scripts;C:\Espressif\frameworks\esp-idf-v5.0\tools;%PATH%]
+
+!ENTRY org.eclipse.ui.ide 4 0 2023-05-16 16:42:18.369
+!MESSAGE Could not import project located at G:\My Drive\Projects\FFF_Free_Food_forever\Software\CyanO_esp32_MicroPython
+!STACK 0
+org.eclipse.ui.internal.wizards.datatransfer.CouldNotImportProjectException: Could not import project located at G:\My Drive\Projects\FFF_Free_Food_forever\Software\CyanO_esp32_MicroPython
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:565)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.run(SmartImportJob.java:252)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:178)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:62)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:272)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:258)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.createOrImportProject(SmartImportJob.java:604)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:552)
+	... 2 more
+
+!ENTRY org.eclipse.ui.ide 4 0 2023-05-16 16:42:51.785
+!MESSAGE Could not import project located at G:\My Drive\Projects\FFF_Free_Food_forever\Software\CyanO_esp32_MicroPython
+!STACK 0
+org.eclipse.ui.internal.wizards.datatransfer.CouldNotImportProjectException: Could not import project located at G:\My Drive\Projects\FFF_Free_Food_forever\Software\CyanO_esp32_MicroPython
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:565)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.run(SmartImportJob.java:252)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:178)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:62)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:272)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:258)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.createOrImportProject(SmartImportJob.java:604)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:552)
+	... 2 more

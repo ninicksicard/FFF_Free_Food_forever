@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: micropython-schedule
+Version: 0.1.8
+Summary: Job scheduling for humans.
+Home-page: https://github.com/rguillon/schedule
+Download-URL: https://github.com/rguillon/schedule/tarball/0.1.8
+Author: Renaud Guillon
+Author-email: renaud.guillon@gmail.com
+License: MIT
+Keywords: schedule,periodic,jobs,scheduling,cron,micropython
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Natural Language :: English
+License-File: LICENSE.txt
+Requires-Dist: micropython-ucontextlib
+Requires-Dist: micropython-logging
+Requires-Dist: micropython-time
+
+Lighter implementation of the schedule module: https://github.com/dbader/schedule

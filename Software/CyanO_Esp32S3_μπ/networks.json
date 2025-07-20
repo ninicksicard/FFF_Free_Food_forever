@@ -1,0 +1,25 @@
+{
+    "schema": 2,
+    "known_networks": [
+        {
+            "ssid": "HELIX-NS",
+            "password": "B3rtrande!",
+            "enables_webrepl": false
+        },
+        {
+            "ssid": "HomeNetwork",
+            "password": "Password2",
+            "enables_webrepl": false
+        }
+    ],
+    "access_point": {
+        "config": {
+            "essid": "Micropython-Dev2",
+            "channel": 11,
+            "hidden": false,
+            "password": "Pa55W0rd"
+        },
+        "enables_webrepl": false,
+        "start_policy": "fallback"
+    }
+}
