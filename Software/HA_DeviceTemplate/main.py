@@ -1,4 +1,4 @@
-"""Entry point and runtime logic for the cat toy controller."""
+"""Entry point and runtime logic for the example device controller."""
 
 from ESP32S3_IO_MAPPING import *
 # Import print_control so the custom print replacement is active
@@ -33,7 +33,7 @@ BUTTON_PIN = DI3
 motor = None
 
 # MQTT topic for receiving new loop data
-MQTT_LOOP_TOPIC = 'home/esp32s3/toy/loop'
+MQTT_LOOP_TOPIC = 'home/template/device/loop'
 
 
 BUTTON = None
@@ -132,7 +132,7 @@ def run():
     sys.modules[__name__].mqttclient = MYmqtt.myMQTT()
 
     sys.modules[__name__].mqttclient.topics.update({
-        MYmqtt.Topic('home/esp32s3/toy'): [mqtt_set_state, None],
+        MYmqtt.Topic('home/template/device'): [mqtt_set_state, None],
         MYmqtt.Topic(MQTT_LOOP_TOPIC): [mqtt_receive_loop, None],
     })
 

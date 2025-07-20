@@ -1,6 +1,6 @@
-# HA_CatToy
+# HA_DeviceTemplate
 
-This project controls an ESP32S3 based cat toy using MicroPython.  Wi‑Fi and MQTT credentials are no longer stored in the repository.  Instead they are loaded from environment variables or local configuration files that are ignored by git.
+This project provides a skeleton for controlling an ESP32S3 based device with MicroPython.  Use it as a starting point for your own hardware projects.  Wi‑Fi and MQTT credentials are no longer stored in the repository.  Instead they are loaded from environment variables or local configuration files that are ignored by git.
 
 ## Configuration
 
