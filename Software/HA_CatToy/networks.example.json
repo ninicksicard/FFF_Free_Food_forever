@@ -1,0 +1,20 @@
+{
+    "schema": 2,
+    "known_networks": [
+        {
+            "ssid": "YOUR_WIFI_SSID",
+            "password": "YOUR_WIFI_PASSWORD",
+            "enables_webrepl": false
+        }
+    ],
+    "access_point": {
+        "config": {
+            "essid": "Micropython-Dev2",
+            "channel": 11,
+            "hidden": false,
+            "password": "CHANGE_ME"
+        },
+        "enables_webrepl": false,
+        "start_policy": "fallback"
+    }
+}

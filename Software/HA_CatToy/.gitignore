@@ -1,0 +1,4 @@
+# Ignore configuration files containing credentials
+networks.json
+mqtt_config.json
+.env
