@@ -5,9 +5,9 @@
 
 Automated spirulina bioreactor. When your refrigerator also make your food.
  
-This is my take on solving world unger. 
+This is my take on solving world unger.
 
-Spirulina is nutritive, cheap and easy to grow. Making a spirulina bioreactor could continuously produce a food source with minimal ressources. 
+Spirulina is nutritive, cheap and easy to grow. Making a spirulina bioreactor could continuously produce a food source with minimal ressources.
 
 Current status : 
 working prototype with some manual input. 
@@ -88,6 +88,7 @@ When rinsed properly, fresh and mixed with water, it feels and taste like drinki
 6. [Troubleshooting](#troubleshooting)
 7. [License](#license)
 8. [Acknowledgements](#acknowledgements)
+9. [Documentation and Data](#docs-data)
 
 ## Introduction <a name="introduction"></a>
 Welcome to the DIY Spirulina Bioreactor project. Spirulina is a nutrient-rich, easy-to-grow microalgae that serves as an excellent food source. Our project aims to tackle world hunger by providing a cost-effective solution: a DIY Spirulina Bioreactor. This bioreactor automates the process of Spirulina cultivation, offering a sustainable food production method with minimal resource requirements.
@@ -116,6 +117,9 @@ This project is licensed under the MIT license.
 
 ## Acknowledgements <a name="acknowledgements"></a>
 We would like to thank the open-source community for their continuous support and inspiration that made this project possible.
+
+## Documentation and Data <a name="docs-data"></a>
+All supplementary documentation can be found in the `docs/` directory, including fabrication instructions and research papers. Data sets and spreadsheets are now located in the `data/` folder. Media files showing the progression of the project are under `media/`.
 
 ---
 
